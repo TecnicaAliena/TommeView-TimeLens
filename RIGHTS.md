@@ -12,8 +12,12 @@ debugging modifications to the LGPL-covered libraries.
 
 Il codice dell'applicazione resta privato. La presenza di componenti LGPL/GPL
 non equivale a concedere automaticamente tali licenze al codice originale di
-TommeView. Le condizioni finali dell'eventuale distribuzione dell'applicazione
-saranno fornite insieme alla release; al momento non viene distribuito un binario.
+TommeView. L'autore autorizza l'uso gratuito personale e professionale, con
+donazioni facoltative, secondo le [condizioni dell'applicazione](APPLICATION_LICENSE.txt).
+Al momento non viene distribuito un binario, in attesa di completare la
+preparazione dei sorgenti e degli avvisi delle dipendenze.
 
-The final application distribution terms will accompany a public binary release;
-no application binary is currently distributed here.
+The author approved free personal and professional use with voluntary donations.
+The [application terms](APPLICATION_LICENSE.txt) preserve third-party license
+rights and will accompany the public binary. No application binary is currently
+distributed here while dependency-source preparation remains in progress.
