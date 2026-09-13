@@ -8,6 +8,7 @@ TommeView distribuisce un programma Windows e componenti esterni. Questa pagina 
 | FFmpeg shared / ffprobe | n8.1.2-51-g7ba069f4f1 | LGPL; [commit sorgente](https://github.com/FFmpeg/FFmpeg/tree/7ba069f4f1), [build BtbN](https://github.com/BtbN/FFmpeg-Builds/tree/autobuild-2026-09-09-14-51) |
 | yt-dlp Windows executable | 2026.08.19 | Unlicense per il progetto principale e GPLv3+ per il binario standalone; [tag sorgente](https://github.com/yt-dlp/yt-dlp/tree/2026.08.19) |
 | Deno | 2.9.6 | [tag sorgente](https://github.com/denoland/deno/tree/v2.9.6); avviso in `licenses/deno-LICENSE.md` |
+| Renderer software OpenGL: Mesa / LLVM | 11.2.2 / 3.6.2 | Mesa: MIT e avvisi dei componenti; LLVM: University of Illinois/NCSA e avvisi dei componenti. Testi in [Mesa](licenses/Mesa-11.2.2-NOTICES.txt) e [LLVM](licenses/LLVM-3.6.2-NOTICES.txt). |
 
 Le versioni e gli hash sono nel manifest `download-tools.json` incluso. La 1.6.2 include questa pagina, `licenses/` e [riferimenti ai sorgenti e verifiche aperte](SOURCE_REFERENCES.md). Il pacchetto locale non e ancora approvato per redistribuzione pubblica.
 

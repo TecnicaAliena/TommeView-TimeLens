@@ -1,0 +1,25 @@
+[
+  {
+    "file": "Mesa-11.2.2-NOTICES.txt",
+    "sha256": "b4c0f5e72eaacb5872e2902766f4afd9eea11cd9332f6f21d75ec02071cfc81e",
+    "source_url": "https://archive.mesa3d.org/older-versions/11.x/11.2.2/mesa-11.2.2.tar.xz",
+    "source_sha256": "40e148812388ec7c6d7b6657d5a16e2e8dabba8b97ddfceea5197947647bdfb4",
+    "source_paths": [
+      "mesa-11.2.2/docs/license.html"
+    ],
+    "transformation": "HTML tags removed for Mesa; MD5 leading comment only; other notice text unchanged"
+  },
+  {
+    "file": "LLVM-3.6.2-NOTICES.txt",
+    "sha256": "19714f7fe1d97a46893c0dc3c517657de9d2ccfa5b854b5b6f9b3b0de750579a",
+    "source_url": "https://releases.llvm.org/3.6.2/llvm-3.6.2.src.tar.xz",
+    "source_sha256": "f60dc158bfda6822de167e87275848969f0558b3134892ff54fced87e4667b94",
+    "source_paths": [
+      "llvm-3.6.2.src/LICENSE.TXT",
+      "llvm-3.6.2.src/lib/Support/COPYRIGHT.regex",
+      "llvm-3.6.2.src/lib/Support/MD5.cpp",
+      "llvm-3.6.2.src/lib/Target/ARM/LICENSE.TXT"
+    ],
+    "transformation": "HTML tags removed for Mesa; MD5 leading comment only; other notice text unchanged"
+  }
+]
