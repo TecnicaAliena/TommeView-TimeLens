@@ -20,5 +20,3 @@ Il binario usato è la variante shared: `--enable-shared --disable-static`, senz
 La guida ufficiale FFmpeg raccomanda di rendere disponibile il sorgente corrispondente, le modifiche e le istruzioni di compilazione per la distribuzione LGPL: [FFmpeg Legal](https://ffmpeg.org/legal.html).
 
 Per PySide6 abbiamo scelto LGPL-3.0-only dove disponibile. I testi ufficiali completi sono inclusi in [LGPL-3.0.txt](licenses/LGPL-3.0.txt) e [GPL-3.0.txt](licenses/GPL-3.0.txt): LGPLv3 incorpora il testo GPLv3 con permessi aggiuntivi. Questa scelta non cambia le licenze specifiche dei singoli moduli Qt o delle dipendenze e non assegna la GPL a TommeView.
-
-La raccolta dei testi non sostituisce la verifica dei sorgenti corrispondenti e delle condizioni di sostituzione delle librerie. Se cambia una build, aggiornare insieme binario, avvisi, sorgente, hash e questa tabella.
