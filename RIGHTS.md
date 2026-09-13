@@ -10,6 +10,8 @@ components they cover. Nothing in this repository restricts rights granted by
 those licenses, including LGPL library replacement and reverse engineering for
 debugging modifications to the LGPL-covered libraries.
 
+See [library replacement instructions / sostituzione delle librerie](LIBRARY_REPLACEMENT.md).
+
 Il codice dell'applicazione resta privato. La presenza di componenti LGPL/GPL
 non equivale a concedere automaticamente tali licenze al codice originale di
 TommeView. L'autore autorizza l'uso gratuito personale e professionale, con
