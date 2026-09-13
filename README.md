@@ -4,7 +4,7 @@
 
 ![TommeView: video, tag e misurazione degli intervalli](images/tommeview.png)
 
-*Schermata con un video sintetico di prova, non incluso nell'installer. Il nome dell'applicazione Windows resta TommeView.*
+*Schermata con un video sintetico di prova, non incluso nell'installer.*
 
 ### Osserva il video. Segna gli eventi. Misura i tempi.
 
