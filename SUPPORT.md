@@ -1,6 +1,7 @@
 # Supporto / Support
 
-Use this repository's Issues for reproducible problems or suggestions.
+Use this repository's Issues for reproducible problems. For feature and
+improvement suggestions, start from [Ideas and suggestions](IDEAS.md).
 
 Include:
 
