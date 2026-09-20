@@ -2,7 +2,7 @@
 
 ### Watch the video. Mark the events. Measure the time.
 
-[Italiano](README.it.md) · [English manual](manual.en.md) · [Installation](INSTALLATION.md) · [Ideas and suggestions](IDEAS.md) · [Third-party licenses](THIRD_PARTY_LICENSES.md)
+[Italiano](README.it.md) · [English manual](manual.en.md) · [Installation](INSTALLATION.md) · [Issues](https://github.com/TecnicaAliena/TommeView-TimeLens/issues) · [Third-party licenses](THIRD_PARTY_LICENSES.md)
 
 ![TommeView video annotation and timing interface](images/tommeview.png)
 
@@ -67,7 +67,7 @@ For problems, include the application/Windows versions and reproducible steps.
 Do not upload confidential videos, personal annotations or credentials.
 See [support](SUPPORT.md).
 
-Feature and improvement suggestions are collected in [Ideas and suggestions](IDEAS.md).
+Feature and improvement suggestions are collected in [GitHub Issues](https://github.com/TecnicaAliena/TommeView-TimeLens/issues).
 
 This repository contains public documentation, not application source or private
 history. See [rights and third-party components](RIGHTS.md).

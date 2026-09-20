@@ -1,6 +1,6 @@
 # TommeView TimeLens
 
-[English overview](README.md) · [Manuale italiano](manuale.it.md) · [Installation (English)](INSTALLATION.md) · [Idee e suggerimenti](IDEAS.it.md) · [Licenses (English)](THIRD_PARTY_LICENSES.md)
+[English overview](README.md) · [Manuale italiano](manuale.it.md) · [Installation (English)](INSTALLATION.md) · [Issues](https://github.com/TecnicaAliena/TommeView-TimeLens/issues) · [Licenses (English)](THIRD_PARTY_LICENSES.md)
 
 ![TommeView: video, tag e misurazione degli intervalli](images/tommeview.png)
 
@@ -83,6 +83,6 @@ Il modulo aggiornato include un avviso e una conferma esplicita prima di avviare
 
 Per segnalare un problema, prepara la versione di TommeView, la versione di Windows e i passaggi necessari a riprodurlo. Evita di pubblicare video riservati, annotazioni personali, credenziali o altri dati sensibili.
 
-Le proposte di funzioni e miglioramenti sono raccolte in [Idee e suggerimenti](IDEAS.it.md).
+Le proposte di funzioni e miglioramenti sono raccolte nelle [GitHub Issues](https://github.com/TecnicaAliena/TommeView-TimeLens/issues).
 
 Questo repository ospita presentazione e documentazione pubblica. Non contiene i sorgenti dell'applicazione né la cronologia del repository privato. Le licenze dei componenti esterni non attribuiscono automaticamente la stessa licenza a TommeView. Vedi [diritti e componenti esterni](RIGHTS.md).

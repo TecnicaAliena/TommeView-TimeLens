@@ -1,7 +1,7 @@
 # Support
 
-Use this repository's Issues for reproducible problems. For feature and
-improvement suggestions, start from [Ideas and suggestions](IDEAS.md).
+Use this repository's [GitHub Issues](https://github.com/TecnicaAliena/TommeView-TimeLens/issues)
+for reproducible problems, feature requests and improvement suggestions.
 
 Include:
 
