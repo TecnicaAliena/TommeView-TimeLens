@@ -1,6 +1,6 @@
 # TommeView TimeLens
 
-[English](README.md) · [Manuale italiano](manuale.it.md) · [Installazione](INSTALLATION.md) · [Idee e suggerimenti](IDEAS.it.md) · [Licenze](THIRD_PARTY_LICENSES.md)
+[English overview](README.md) · [Manuale italiano](manuale.it.md) · [Installation (English)](INSTALLATION.md) · [Idee e suggerimenti](IDEAS.it.md) · [Licenses (English)](THIRD_PARTY_LICENSES.md)
 
 ![TommeView: video, tag e misurazione degli intervalli](images/tommeview.png)
 

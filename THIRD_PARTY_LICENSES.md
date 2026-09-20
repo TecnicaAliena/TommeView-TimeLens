@@ -1,32 +1,56 @@
-# Licenze e componenti di terze parti
+# Third-party licenses and components
 
-TommeView distribuisce un programma Windows e componenti esterni. Questa pagina accompagna le release; i testi integrali sono nella cartella [`licenses/`](licenses/).
+TommeView distributes a Windows application together with third-party
+components. This page accompanies the releases; full texts are in
+[`licenses/`](licenses/).
 
-| Componente | Versione | Licenza / sorgente |
+| Component | Version | License / source |
 | --- | --- | --- |
-| PySide6, PySide6-Essentials, PySide6-Addons, shiboken6 | 6.10.2 | Scelta TommeView: **LGPL-3.0-only**; SPDX del pacchetto `LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only`; decisione in `licenses/PySide6-LICENSE-DECISION.md`; avvisi Qt in `licenses/`; [Qt for Python](https://code.qt.io/pyside/pyside-setup/), tag `6.10.2` |
-| FFmpeg shared / ffprobe | n8.1.2-51-g7ba069f4f1 | LGPL; [commit sorgente](https://github.com/FFmpeg/FFmpeg/tree/7ba069f4f1), [build BtbN](https://github.com/BtbN/FFmpeg-Builds/tree/autobuild-2026-09-09-14-51) |
-| yt-dlp Windows executable | 2026.08.19 | Unlicense per il progetto principale e GPLv3+ per il binario standalone; [tag sorgente](https://github.com/yt-dlp/yt-dlp/tree/2026.08.19) |
-| Deno | 2.9.6 | [tag sorgente](https://github.com/denoland/deno/tree/v2.9.6); avviso in `licenses/deno-LICENSE.md` |
-| Renderer software OpenGL: Mesa / LLVM | 11.2.2 / 3.6.2 | Mesa: MIT e avvisi dei componenti; LLVM: University of Illinois/NCSA e avvisi dei componenti. Testi in [Mesa](licenses/Mesa-11.2.2-NOTICES.txt) e [LLVM](licenses/LLVM-3.6.2-NOTICES.txt). |
+| PySide6, PySide6-Essentials, PySide6-Addons, shiboken6 | 6.10.2 | TommeView selection: **LGPL-3.0-only**; package SPDX expression `LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only`; decision in `licenses/PySide6-LICENSE-DECISION.md`; Qt notices in `licenses/`; [Qt for Python](https://code.qt.io/pyside/pyside-setup/), tag `6.10.2` |
+| Shared FFmpeg / ffprobe | n8.1.2-51-g7ba069f4f1 | LGPL; [source commit](https://github.com/FFmpeg/FFmpeg/tree/7ba069f4f1), [BtbN build](https://github.com/BtbN/FFmpeg-Builds/tree/autobuild-2026-09-09-14-51) |
+| yt-dlp Windows executable | 2026.08.19 | Unlicense for the main project and GPLv3+ for the standalone binary; [source tag](https://github.com/yt-dlp/yt-dlp/tree/2026.08.19) |
+| Deno | 2.9.6 | [source tag](https://github.com/denoland/deno/tree/v2.9.6); notice in `licenses/deno-LICENSE.md` |
+| Software OpenGL renderer: Mesa / LLVM | 11.2.2 / 3.6.2 | Mesa: MIT and component notices; LLVM: University of Illinois/NCSA and component notices. Texts in [Mesa](licenses/Mesa-11.2.2-NOTICES.txt) and [LLVM](licenses/LLVM-3.6.2-NOTICES.txt). |
 
-Le versioni e gli hash sono nel manifest `download-tools.json` incluso. La 1.6.2 include questa pagina, `licenses/` e [riferimenti ai sorgenti e verifiche aperte](SOURCE_REFERENCES.md). Il pacchetto locale non e ancora approvato per redistribuzione pubblica.
+Versions and hashes are in the included `download-tools.json` manifest. Release
+1.6.4 includes this page, `licenses/`, and the source-delivery assets described
+in [source references](SOURCE_REFERENCES.md) and
+[delivery instructions](SOURCE_DELIVERY.md).
 
-Qt Multimedia include inoltre FFmpeg 7.1.2 (LGPL-2.1-or-later), distinto dal FFmpeg esterno: testo in `licenses/LGPL-2.1.txt`, configurazione in `SOURCE_REFERENCES.md`. Il runtime Python 3.11.9 conserva il testo originale in `licenses/Python-LICENSE.txt`.
+Qt Multimedia also includes FFmpeg 7.1.2 (LGPL-2.1-or-later), separate from the
+acquisition FFmpeg. Its text is in `licenses/LGPL-2.1.txt`; configuration is in
+`SOURCE_REFERENCES.md`. Python 3.11.9 retains its original text in
+`licenses/Python-LICENSE.txt`.
 
-Gli [avvisi estesi Qt](licenses/Qt-SOURCE-NOTICES.txt) riportano attribuzioni e testi delle dipendenze presenti nei moduli sorgente Qt 6.10.2 raccolti. Comprendono anche strumenti, test e codice per altre piattaforme: non indicano che tutti questi componenti siano installati con TommeView.
+[Extended Qt notices](licenses/Qt-SOURCE-NOTICES.txt) preserve attributions and
+texts from the Qt 6.10.2 source modules collected. They also cover tools, tests
+and code for other platforms; they do not state that every listed component is
+installed with TommeView.
 
-Gli [avvisi Apache-2.0](licenses/Apache-DECLARED-NOTICES.txt) conservano dichiarazioni e copyright originali dei componenti elencati, accompagnati dal [testo completo](licenses/Apache-2.0.txt). La scelta Apache-2.0 riguarda questi componenti, non il codice originale di TommeView.
+[Apache-2.0 notices](licenses/Apache-DECLARED-NOTICES.txt) preserve the original
+declarations and copyrights of the listed components alongside the
+[full text](licenses/Apache-2.0.txt). The Apache-2.0 selection concerns those
+components, not TommeView's original code.
 
-Gli [avvisi MIT e CC0](licenses/MIT-CC0-DECLARED-NOTICES.txt) conservano le
-dichiarazioni dei pacchetti, gli autori pubblicati e le intestazioni originali
-disponibili nei sorgenti. I testi completi sono [MIT](licenses/MIT.txt) e
-[CC0-1.0](licenses/CC0-1.0.txt); non modificano la licenza di TommeView.
+[MIT and CC0 notices](licenses/MIT-CC0-DECLARED-NOTICES.txt) preserve package
+declarations, published authors and original source headers where available.
+The full texts are [MIT](licenses/MIT.txt) and [CC0-1.0](licenses/CC0-1.0.txt);
+they do not change TommeView's license.
 
-## Verifica FFmpeg
+## FFmpeg configuration
 
-Il binario usato è la variante shared: `--enable-shared --disable-static`, senza `--enable-gpl` né `--enable-nonfree`, e con `--disable-libx264` e `--disable-libx265`. L'output completo e l'hash sono in [`ffmpeg-build-config.txt`](ffmpeg-build-config.txt). Questa è evidenza della configurazione, non una certificazione legale o brevettuale.
+The acquisition binary is the shared variant: `--enable-shared --disable-static`,
+without `--enable-gpl` or `--enable-nonfree`, and with `--disable-libx264` and
+`--disable-libx265`. The full output and hash are in
+[`ffmpeg-build-config.txt`](ffmpeg-build-config.txt). This is configuration
+evidence, not a legal or patent certification.
 
-La guida ufficiale FFmpeg raccomanda di rendere disponibile il sorgente corrispondente, le modifiche e le istruzioni di compilazione per la distribuzione LGPL: [FFmpeg Legal](https://ffmpeg.org/legal.html).
+The official FFmpeg guidance recommends making corresponding source,
+modifications and build instructions available for LGPL distribution:
+[FFmpeg Legal](https://ffmpeg.org/legal.html).
 
-Per PySide6 abbiamo scelto LGPL-3.0-only dove disponibile. I testi ufficiali completi sono inclusi in [LGPL-3.0.txt](licenses/LGPL-3.0.txt) e [GPL-3.0.txt](licenses/GPL-3.0.txt): LGPLv3 incorpora il testo GPLv3 con permessi aggiuntivi. Questa scelta non cambia le licenze specifiche dei singoli moduli Qt o delle dipendenze e non assegna la GPL a TommeView.
+Where offered by PySide6, TommeView selects LGPL-3.0-only. The complete official
+texts are included in [LGPL-3.0.txt](licenses/LGPL-3.0.txt) and
+[GPL-3.0.txt](licenses/GPL-3.0.txt); LGPLv3 incorporates GPLv3 with additional
+permissions. This selection does not alter the specific licenses of individual
+Qt modules or dependencies and does not license TommeView under the GPL.

@@ -1,41 +1,5 @@
-TommeView - Condizioni d'uso / Terms of use
+TommeView — Terms of use
 Copyright (c) 2026 Marco Tommesani
-
-ITALIANO
-
-1. Uso gratuito. Marco Tommesani concede il permesso di installare e usare
-   TommeView gratuitamente, per scopi personali e professionali. Le donazioni
-   sono facoltative e non sono necessarie per usare il programma.
-
-2. Codice dell'applicazione. I sorgenti originali di TommeView non sono
-   distribuiti. Questa autorizzazione non assegna la proprieta del codice,
-   del nome o dell'identita del progetto e non concede una licenza open source
-   al codice originale dell'applicazione.
-
-3. Copie. E consentito condividere copie inalterate dei pacchetti pubblicati
-   dall'autore, conservando queste condizioni, gli avvisi e le licenze incluse
-   e l'accesso ai sorgenti corrispondenti dei componenti quando richiesto.
-   Non presentare una copia modificata come release ufficiale di TommeView.
-
-4. Componenti di terze parti. I rispettivi autori conservano i propri diritti.
-   Le licenze specifiche in licenses/ e THIRD_PARTY_LICENSES.md prevalgono per
-   i componenti che disciplinano. Queste condizioni non limitano i diritti di
-   copiare, modificare o ridistribuire quei componenti previsti dalle loro
-   licenze. In particolare, e consentito sostituire le librerie LGPL con
-   versioni compatibili e svolgere reverse engineering per il debug delle
-   modifiche alle librerie LGPL. Non sono imposti blocchi alla loro sostituzione.
-
-5. Video e misurazioni. L'utente verifica di avere diritti e autorizzazioni
-   necessari, rispettando anche le condizioni dei servizi esterni. La funzione
-   YouTube e il suo avviso non conferiscono autorizzazioni al download.
-   I tempi misurati appartengono alla timeline del video; il programma non e
-   uno strumento metrologico certificato e non sostituisce verifiche indipendenti.
-
-6. Garanzie. Il programma e fornito nello stato in cui si trova, senza garanzie
-   volontarie di idoneita a uno scopo specifico o assistenza con tempi garantiti.
-   Restano salvi i diritti e le responsabilita inderogabili previsti dalla legge.
-
-ENGLISH
 
 1. Free use. Marco Tommesani grants permission to install and use TommeView
    free of charge for personal and professional purposes. Donations are
@@ -51,11 +15,12 @@ ENGLISH
    as official TommeView releases.
 
 4. Third-party components. Their authors retain their rights. The specific
-   licenses in licenses/ and THIRD_PARTY_LICENSES.md take precedence for the
+   licenses in `licenses/` and `THIRD_PARTY_LICENSES.md` take precedence for the
    components they cover. These terms do not restrict copying, modification or
    redistribution rights granted by those licenses. In particular, users may
    replace LGPL libraries with compatible versions and reverse engineer for
-   debugging modifications to those LGPL libraries. No replacement lock is imposed.
+   debugging modifications to those LGPL libraries. No replacement lock is
+   imposed.
 
 5. Videos and measurements. Users must verify relevant rights and permissions,
    including external service terms. The YouTube feature and notice do not grant

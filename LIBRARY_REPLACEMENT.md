@@ -1,42 +1,4 @@
-# Sostituzione delle librerie / Library replacement
-
-## Italiano
-
-TommeView usa PySide6 e moduli Qt sotto LGPLv3 e librerie FFmpeg sotto le
-rispettive licenze LGPL. Le librerie sono file separati: le condizioni di
-TommeView consentono la loro sostituzione con versioni compatibili e il reverse
-engineering necessario per il debug delle modifiche alle librerie LGPL.
-
-Per una distribuzione Windows basata sull'attuale pacchetto:
-
-1. Chiudere TommeView. Aprire la cartella dell'app tramite le proprietà del
-   collegamento Windows. L'installazione predefinita è nella cartella programmi
-   dell'utente, non in Program Files.
-2. Conservare una copia dell'intera cartella dell'app per poter ripristinare
-   i file. Non cancellare video o annotazioni: le sessioni sono separate, in
-   `%LOCALAPPDATA%\TommeView\sessions`.
-3. Sostituire le librerie interessate nella copia dell'app. Qt e i relativi
-   plugin si trovano in `_internal\PySide6`; i binding PySide6 e shiboken6
-   si trovano nelle rispettive cartelle sotto `_internal`. Conservare la
-   struttura delle directory e includere le dipendenze della propria build.
-4. Usare build Windows x64 con ABI e runtime compatibili. I binding distribuiti
-   sono PySide6/shiboken6 6.10.2 con Python 3.11; cambiare arbitrariamente versione
-   principale di Qt o nomi delle DLL non garantisce compatibilità.
-5. Avviare `TommeView.exe` nella copia modificata e verificare il funzionamento
-   con un video di prova. Se necessario, ripristinare la copia di sicurezza.
-
-FFmpeg per la riproduzione è nella cartella PySide6; quello per le acquisizioni
-è separato sotto `_internal\tools\download\ffmpeg-shared`. Non scambiare le
-DLL delle due build: usano versioni principali differenti. Aggiornamenti o
-reinstallazioni possono sostituire i file modificati: conservare la propria copia.
-
-Queste istruzioni descrivono la struttura del pacchetto e non attestano che una
-specifica build modificata sia stata provata. Per versioni, licenze e sorgenti
-consultare [i componenti](THIRD_PARTY_LICENSES.md) e [i riferimenti](SOURCE_REFERENCES.md).
-Non è necessario pubblicare le proprie modifiche per il solo uso privato;
-la loro eventuale distribuzione resta soggetta alle licenze applicabili.
-
-## English
+# Library replacement
 
 TommeView uses PySide6 and selected Qt modules under LGPLv3 and FFmpeg libraries
 under their respective LGPL licenses. Libraries are separate files. TommeView's

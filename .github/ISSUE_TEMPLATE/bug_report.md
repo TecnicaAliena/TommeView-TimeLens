@@ -1,22 +1,21 @@
 ---
-name: Problema / Bug report
-about: Segnala un problema riproducibile / Report a reproducible issue
+name: Bug report
+about: Report a reproducible TommeView problem
 title: ''
-labels: ''
+labels: bug
 assignees: ''
 ---
 
-**Versione TommeView / TommeView version:**
+**TommeView version:**
 
-**Versione Windows / Windows version:**
+**Windows version:**
 
-**Passaggi / Steps to reproduce:**
+**Steps to reproduce:**
 
-**Risultato atteso / Expected result:**
+**Expected result:**
 
-**Risultato osservato / Actual result:**
+**Actual result:**
 
-**Codec, risoluzione, FPS / Codec, resolution, FPS (if relevant):**
+**Codec, resolution and FPS (if relevant):**
 
-Non allegare video riservati, annotazioni personali o credenziali.
 Do not attach confidential footage, personal annotations or credentials.

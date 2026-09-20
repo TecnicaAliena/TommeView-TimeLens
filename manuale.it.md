@@ -1,6 +1,6 @@
 # Manuale TommeView 1.6.4
 
-[Presentazione](README.md) · [English manual](manual.en.md) · [Installazione](INSTALLATION.md)
+[Presentazione italiana](README.it.md) · [English overview](README.md) · [English manual](manual.en.md) · [Installation (English)](INSTALLATION.md)
 
 ## Primo utilizzo
 
