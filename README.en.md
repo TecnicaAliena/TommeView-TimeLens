@@ -6,7 +6,7 @@
 
 ![TommeView video annotation and timing interface](images/tommeview.png)
 
-*Screenshot uses synthetic test footage, not bundled with the installer. The Windows application's name remains TommeView.*
+*Screenshot uses synthetic test footage, not bundled with the installer.*
 
 TommeView is a Windows video player for manual timing analysis in engineering.
 Slow down footage, navigate to an event and mark it. Different numeric labels
