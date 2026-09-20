@@ -37,11 +37,7 @@ and frame rate before interpreting them as real machine timings.
 
 ## Availability
 
-**No installer is publicly available yet.** Candidate version: 1.6.3.
-Dependency sources and notices are being assembled before binary distribution.
-See [releases](https://github.com/TecnicaAliena/TommeView-TimeLens/releases) and
-[distribution status](SOURCE_REFERENCES.md). Python and VLC will not be required.
-Installation is per user; Explorer integration is optional.
+Download **TommeView 1.6.4** from the [releases](https://github.com/TecnicaAliena/TommeView-TimeLens/releases) page. Third-party dependency source assets are separate from the installer; see [references](SOURCE_REFERENCES.md) and [delivery instructions](SOURCE_DELIVERY.md). Python and VLC are not required. Installation is per user; Explorer integration is optional.
 
 ## About the creator
 

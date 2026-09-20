@@ -2,10 +2,9 @@
 
 ## Italiano
 
-La release pubblica dell'installer è in preparazione: non è ancora disponibile.
-Le istruzioni descrivono il pacchetto Windows candidato 1.6.3.
+Queste istruzioni descrivono il pacchetto Windows pubblico 1.6.4.
 
-1. Quando disponibile, scarica `TommeViewSetup.exe` dalle Releases di questo repository.
+1. Scarica `TommeViewSetup.exe` dalle Releases di questo repository.
 2. Eseguilo e scegli italiano o inglese. Non occorre installare Python o VLC.
 3. L'installazione è per il tuo utente, normalmente in `%LOCALAPPDATA%\Programs\TommeView`, senza privilegi amministrativi.
 4. Scegli il collegamento sul desktop e le integrazioni desiderate: **Apri con**, voce contestuale e associazioni. Le associazioni predefinite sono facoltative e inizialmente deselezionate; Windows può richiedere una scelta esplicita in Apri con.
@@ -18,10 +17,9 @@ Per disinstallare usa le impostazioni App di Windows: vengono rimosse l'app e le
 
 ## English
 
-The public installer is being prepared and is not yet available. These instructions
-describe Windows candidate 1.6.3.
+These instructions describe the public Windows 1.6.4 package.
 
-1. Once available, download `TommeViewSetup.exe` from this repository's Releases.
+1. Download `TommeViewSetup.exe` from this repository's Releases.
 2. Run it and choose English or Italian. Python and VLC are not required.
 3. Installation is per user, normally under `%LOCALAPPDATA%\Programs\TommeView`, without administrator privileges.
 4. Choose desktop/Explorer integration options. Default file associations are optional and initially unchecked; Windows may require an explicit Open with selection.

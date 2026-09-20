@@ -1,0 +1,485 @@
+APACHE-2.0 DECLARATIONS AND COPYRIGHT NOTICES
+Source-package superset, not an actual binary component list.
+Full license: Apache-2.0.txt
+
+=== deno/ast_node-5.0.0 ===
+Source: https://static.crates.io/crates/ast_node/ast_node-5.0.0.crate
+Upstream declaration: Apache-2.0
+Selected: Apache-2.0
+Authors as published: ["강동윤 <kdy1997.dev@gmail.com>"]
+
+=== deno/better_scoped_tls-1.0.1 ===
+Source: https://static.crates.io/crates/better_scoped_tls/better_scoped_tls-1.0.1.crate
+Upstream declaration: Apache-2.0
+Selected: Apache-2.0
+Authors as published: ["강동윤 <kdy1997.dev@gmail.com>"]
+
+=== deno/derive-io-0.4.1 ===
+Source: https://static.crates.io/crates/derive-io/derive-io-0.4.1.crate
+Upstream declaration: MIT OR Apache-2.0
+Selected: Apache-2.0
+Authors as published: ["Matt Mastracci <matthew@mastracci.com>"]
+
+=== deno/derive-io-macros-0.4.1 ===
+Source: https://static.crates.io/crates/derive-io-macros/derive-io-macros-0.4.1.crate
+Upstream declaration: MIT OR Apache-2.0
+Selected: Apache-2.0
+Authors as published: ["Matt Mastracci <matthew@mastracci.com>"]
+
+=== deno/from_variant-3.0.0 ===
+Source: https://static.crates.io/crates/from_variant/from_variant-3.0.0.crate
+Upstream declaration: Apache-2.0
+Selected: Apache-2.0
+Authors as published: ["강동윤 <kdy1997.dev@gmail.com>"]
+
+=== deno/sptr-0.3.2 ===
+Source: https://static.crates.io/crates/sptr/sptr-0.3.2.crate
+Upstream declaration: MIT OR Apache-2.0
+Selected: Apache-2.0
+Authors as published: []
+
+=== deno/string_enum-1.0.2 ===
+Source: https://static.crates.io/crates/string_enum/string_enum-1.0.2.crate
+Upstream declaration: Apache-2.0
+Selected: Apache-2.0
+Authors as published: ["강동윤 <kdy1997.dev@gmail.com>"]
+
+=== deno/swc_allocator-4.0.1 ===
+Source: https://static.crates.io/crates/swc_allocator/swc_allocator-4.0.1.crate
+Upstream declaration: Apache-2.0
+Selected: Apache-2.0
+Authors as published: ["강동윤 <kdy1997.dev@gmail.com>"]
+
+=== deno/swc_atoms-9.0.0 ===
+Source: https://static.crates.io/crates/swc_atoms/swc_atoms-9.0.0.crate
+Upstream declaration: Apache-2.0
+Selected: Apache-2.0
+Authors as published: ["강동윤 <kdy1997.dev@gmail.com>"]
+
+=== deno/swc_common-17.0.1 ===
+Source: https://static.crates.io/crates/swc_common/swc_common-17.0.1.crate
+Upstream declaration: Apache-2.0
+Selected: Apache-2.0
+Authors as published: ["강동윤 <kdy1997.dev@gmail.com>"]
+
+swc_common-17.0.1/src/errors/diagnostic.rs
+// Copyright 2012-2015 The Rust Project Developers. See the COPYRIGHT
+// file at the top-level directory of this distribution and at
+// http://rust-lang.org/COPYRIGHT.
+//
+// Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
+// http://www.apache.org/licenses/LICENSE-2.0> or the MIT license
+// <LICENSE-MIT or http://opensource.org/licenses/MIT>, at your
+// option. This file may not be copied, modified, or distributed
+// except according to those terms.
+
+
+
+swc_common-17.0.1/src/errors/diagnostic_builder.rs
+// Copyright 2012-2015 The Rust Project Developers. See the COPYRIGHT
+// file at the top-level directory of this distribution and at
+// http://rust-lang.org/COPYRIGHT.
+//
+// Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
+// http://www.apache.org/licenses/LICENSE-2.0> or the MIT license
+// <LICENSE-MIT or http://opensource.org/licenses/MIT>, at your
+// option. This file may not be copied, modified, or distributed
+// except according to those terms.
+
+
+
+swc_common-17.0.1/src/errors/emitter.rs
+// Copyright 2012-2015 The Rust Project Developers. See the COPYRIGHT
+// file at the top-level directory of this distribution and at
+// http://rust-lang.org/COPYRIGHT.
+//
+// Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
+// http://www.apache.org/licenses/LICENSE-2.0> or the MIT license
+// <LICENSE-MIT or http://opensource.org/licenses/MIT>, at your
+// option. This file may not be copied, modified, or distributed
+// except according to those terms.
+
+
+
+swc_common-17.0.1/src/errors/lock.rs
+// Copyright 2016 The Rust Project Developers. See the COPYRIGHT
+// file at the top-level directory of this distribution and at
+// http://rust-lang.org/COPYRIGHT.
+//
+// Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
+// http://www.apache.org/licenses/LICENSE-2.0> or the MIT license
+// <LICENSE-MIT or http://opensource.org/licenses/MIT>, at your
+// option. This file may not be copied, modified, or distributed
+// except according to those terms.
+
+//! Bindings to acquire a global named lock.
+//!
+//! This is intended to be used to synchronize multiple compiler processes to
+//! ensure that we can output complete errors without interleaving on Windows.
+//! Note that this is currently only needed for allowing only one 32-bit MSVC
+//! linker to execute at once on MSVC hosts, so this is only implemented for
+//! `cfg(windows)`. Also note that this may not always be used on Windows,
+//! only when targeting 32-bit MSVC.
+//!
+//! For more information about why this is necessary, see where this is called.
+
+
+
+swc_common-17.0.1/src/errors/mod.rs
+// Copyright 2012-2015 The Rust Project Developers. See the COPYRIGHT
+// file at the top-level directory of this distribution and at
+// http://rust-lang.org/COPYRIGHT.
+//
+// Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
+// http://www.apache.org/licenses/LICENSE-2.0> or the MIT license
+// <LICENSE-MIT or http://opensource.org/licenses/MIT>, at your
+// option. This file may not be copied, modified, or distributed
+// except according to those terms.
+
+
+
+swc_common-17.0.1/src/errors/snippet.rs
+// Copyright 2012-2015 The Rust Project Developers. See the COPYRIGHT
+// file at the top-level directory of this distribution and at
+// http://rust-lang.org/COPYRIGHT.
+//
+// Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
+// http://www.apache.org/licenses/LICENSE-2.0> or the MIT license
+// <LICENSE-MIT or http://opensource.org/licenses/MIT>, at your
+// option. This file may not be copied, modified, or distributed
+// except according to those terms.
+
+// Code for annotating snippets.
+
+
+
+swc_common-17.0.1/src/errors/styled_buffer.rs
+// Copyright 2012-2015 The Rust Project Developers. See the COPYRIGHT
+// file at the top-level directory of this distribution and at
+// http://rust-lang.org/COPYRIGHT.
+//
+// Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
+// http://www.apache.org/licenses/LICENSE-2.0> or the MIT license
+// <LICENSE-MIT or http://opensource.org/licenses/MIT>, at your
+// option. This file may not be copied, modified, or distributed
+// except according to those terms.
+
+// Code for creating styled buffers
+
+
+
+swc_common-17.0.1/src/source_map.rs
+// Copyright 2012 The Rust Project Developers. See the COPYRIGHT
+// file at the top-level directory of this distribution and at
+// http://rust-lang.org/COPYRIGHT.
+//
+// Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
+// http://www.apache.org/licenses/LICENSE-2.0> or the MIT license
+// <LICENSE-MIT or http://opensource.org/licenses/MIT>, at your
+// option. This file may not be copied, modified, or distributed
+// except according to those terms.
+
+//! The SourceMap tracks all the source code used within a single crate.
+//!
+//! The mapping from integer byte positions to the original source code location
+//! is stored in `spans`.
+//!
+//! Each bit of source parsed during crate parsing (typically files, in-memory
+//! strings, or various bits of macro expansion) cover a continuous range of
+//! bytes in the SourceMap and are represented by SourceFiles. Byte positions
+//! are stored in `spans` and used pervasively in the compiler. They are
+//! absolute positions within the SourceMap, which upon request can be converted
+//! to line and column information, source code snippets, etc.
+
+
+swc_common-17.0.1/src/sync.rs
+// Copyright 2017 The Rust Project Developers. See the COPYRIGHT
+// file at the top-level directory of this distribution and at
+// http://rust-lang.org/COPYRIGHT.
+//
+// Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
+// http://www.apache.org/licenses/LICENSE-2.0> or the MIT license
+// <LICENSE-MIT or http://opensource.org/licenses/MIT>, at your
+// option. This file may not be copied, modified, or distributed
+// except according to those terms.
+
+//! This module defines types which are thread safe if `cfg!(feature =
+//! "concurrent")` is true.
+//!
+//! `Lrc` is an alias of either Rc or Arc.
+//!
+//! `Lock` is a mutex.
+//! It internally uses `parking_lot::Mutex` if cfg!(parallel_queries) is true,
+//! `RefCell` otherwise.
+//!
+//! `RwLock` is a read-write lock.
+//! It internally uses `parking_lot::RwLock` if cfg!(parallel_queries) is true,
+//! `RefCell` otherwise.
+//!
+//! `LockCell` is a thread safe version of `Cell`, with `set` and `get`
+//! operations. It can never deadlock. It uses `Cell` when
+//! cfg!(parallel_queries) is false, otherwise it is a `Lock`.
+//!
+//! `MTLock` is a mutex which disappears if cfg!(parallel_queries) is false.
+//!
+//! `MTRef` is a immutable reference if cfg!(parallel_queries), and an mutable
+//! reference otherwise.
+//!
+//! `rustc_erase_owner!` erases a OwningRef owner into Erased or Erased + Send +
+//! Sync depending on the value of cfg!(parallel_queries).
+
+
+
+swc_common-17.0.1/src/syntax_pos/analyze_source_file.rs
+// Copyright 2018 The Rust Project Developers. See the COPYRIGHT
+// file at the top-level directory of this distribution and at
+// http://rust-lang.org/COPYRIGHT.
+//
+// Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
+// http://www.apache.org/licenses/LICENSE-2.0> or the MIT license
+// <LICENSE-MIT or http://opensource.org/licenses/MIT>, at your
+// option. This file may not be copied, modified, or distributed
+// except according to those terms.
+
+
+swc_common-17.0.1/src/syntax_pos/hygiene.rs
+// Copyright 2012-2014 The Rust Project Developers. See the COPYRIGHT
+// file at the top-level directory of this distribution and at
+// http://rust-lang.org/COPYRIGHT.
+//
+// Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
+// http://www.apache.org/licenses/LICENSE-2.0> or the MIT license
+// <LICENSE-MIT or http://opensource.org/licenses/MIT>, at your
+// option. This file may not be copied, modified, or distributed
+// except according to those terms.
+
+//! Machinery for hygienic macros, inspired by the `MTWT[1]` paper.
+//!
+//! `[1]` Matthew Flatt, Ryan Culpepper, David Darais, and Robert Bruce Findler.
+//! 2012. *Macros that work together: Compile-time bindings, partial expansion,
+//! and definition contexts*. J. Funct. Program. 22, 2 (March 2012), 181-216.
+//! DOI=10.1017/S0956796812000093 <https://doi.org/10.1017/S0956796812000093>
+
+
+
+=== deno/swc_config-3.1.2 ===
+Source: https://static.crates.io/crates/swc_config/swc_config-3.1.2.crate
+Upstream declaration: Apache-2.0
+Selected: Apache-2.0
+Authors as published: ["강동윤 <kdy1997.dev@gmail.com>"]
+
+=== deno/swc_config_macro-1.0.1 ===
+Source: https://static.crates.io/crates/swc_config_macro/swc_config_macro-1.0.1.crate
+Upstream declaration: Apache-2.0
+Selected: Apache-2.0
+Authors as published: ["강동윤 <kdy1997.dev@gmail.com>"]
+
+=== deno/swc_ecma_ast-18.0.0 ===
+Source: https://static.crates.io/crates/swc_ecma_ast/swc_ecma_ast-18.0.0.crate
+Upstream declaration: Apache-2.0
+Selected: Apache-2.0
+Authors as published: ["강동윤 <kdy1997.dev@gmail.com>"]
+
+=== deno/swc_ecma_codegen-20.0.2 ===
+Source: https://static.crates.io/crates/swc_ecma_codegen/swc_ecma_codegen-20.0.2.crate
+Upstream declaration: Apache-2.0
+Selected: Apache-2.0
+Authors as published: ["강동윤 <kdy1997.dev@gmail.com>"]
+
+=== deno/swc_ecma_codegen_macros-2.0.2 ===
+Source: https://static.crates.io/crates/swc_ecma_codegen_macros/swc_ecma_codegen_macros-2.0.2.crate
+Upstream declaration: Apache-2.0
+Selected: Apache-2.0
+Authors as published: ["강동윤 <kdy1997.dev@gmail.com>"]
+
+=== deno/swc_ecma_lexer-26.0.0 ===
+Source: https://static.crates.io/crates/swc_ecma_lexer/swc_ecma_lexer-26.0.0.crate
+Upstream declaration: Apache-2.0
+Selected: Apache-2.0
+Authors as published: ["강동윤 <kdy1997.dev@gmail.com>"]
+
+=== deno/swc_ecma_loader-17.0.0 ===
+Source: https://static.crates.io/crates/swc_ecma_loader/swc_ecma_loader-17.0.0.crate
+Upstream declaration: Apache-2.0
+Selected: Apache-2.0
+Authors as published: ["강동윤 <kdy1997.dev@gmail.com>"]
+
+=== deno/swc_ecma_parser-27.0.7 ===
+Source: https://static.crates.io/crates/swc_ecma_parser/swc_ecma_parser-27.0.7.crate
+Upstream declaration: Apache-2.0
+Selected: Apache-2.0
+Authors as published: ["강동윤 <kdy1997.dev@gmail.com>"]
+
+=== deno/swc_ecma_transforms_base-30.0.1 ===
+Source: https://static.crates.io/crates/swc_ecma_transforms_base/swc_ecma_transforms_base-30.0.1.crate
+Upstream declaration: Apache-2.0
+Selected: Apache-2.0
+Authors as published: ["강동윤 <kdy1997.dev@gmail.com>"]
+
+=== deno/swc_ecma_transforms_classes-30.0.0 ===
+Source: https://static.crates.io/crates/swc_ecma_transforms_classes/swc_ecma_transforms_classes-30.0.0.crate
+Upstream declaration: Apache-2.0
+Selected: Apache-2.0
+Authors as published: ["강동윤 <kdy1997.dev@gmail.com>"]
+
+=== deno/swc_ecma_transforms_macros-1.0.1 ===
+Source: https://static.crates.io/crates/swc_ecma_transforms_macros/swc_ecma_transforms_macros-1.0.1.crate
+Upstream declaration: Apache-2.0
+Selected: Apache-2.0
+Authors as published: ["강동윤 <kdy1997.dev@gmail.com>"]
+
+=== deno/swc_ecma_transforms_proposal-30.0.0 ===
+Source: https://static.crates.io/crates/swc_ecma_transforms_proposal/swc_ecma_transforms_proposal-30.0.0.crate
+Upstream declaration: Apache-2.0
+Selected: Apache-2.0
+Authors as published: ["강동윤 <kdy1997.dev@gmail.com>"]
+
+=== deno/swc_ecma_transforms_react-33.0.0 ===
+Source: https://static.crates.io/crates/swc_ecma_transforms_react/swc_ecma_transforms_react-33.0.0.crate
+Upstream declaration: Apache-2.0
+Selected: Apache-2.0
+Authors as published: ["강동윤 <kdy1997.dev@gmail.com>"]
+
+=== deno/swc_ecma_transforms_typescript-33.0.0 ===
+Source: https://static.crates.io/crates/swc_ecma_transforms_typescript/swc_ecma_transforms_typescript-33.0.0.crate
+Upstream declaration: Apache-2.0
+Selected: Apache-2.0
+Authors as published: ["강동윤 <kdy1997.dev@gmail.com>"]
+
+=== deno/swc_ecma_utils-24.0.0 ===
+Source: https://static.crates.io/crates/swc_ecma_utils/swc_ecma_utils-24.0.0.crate
+Upstream declaration: Apache-2.0
+Selected: Apache-2.0
+Authors as published: ["강동윤 <kdy1997.dev@gmail.com>"]
+
+=== deno/swc_ecma_visit-18.0.1 ===
+Source: https://static.crates.io/crates/swc_ecma_visit/swc_ecma_visit-18.0.1.crate
+Upstream declaration: Apache-2.0
+Selected: Apache-2.0
+Authors as published: ["강동윤 <kdy1997.dev@gmail.com>"]
+
+=== deno/swc_eq_ignore_macros-1.0.1 ===
+Source: https://static.crates.io/crates/swc_eq_ignore_macros/swc_eq_ignore_macros-1.0.1.crate
+Upstream declaration: Apache-2.0
+Selected: Apache-2.0
+Authors as published: ["강동윤 <kdy1@dudy.kr>"]
+
+=== deno/swc_macros_common-1.0.1 ===
+Source: https://static.crates.io/crates/swc_macros_common/swc_macros_common-1.0.1.crate
+Upstream declaration: Apache-2.0
+Selected: Apache-2.0
+Authors as published: ["강동윤 <kdy1997.dev@gmail.com>"]
+
+=== deno/swc_ts_fast_strip-36.0.0 ===
+Source: https://static.crates.io/crates/swc_ts_fast_strip/swc_ts_fast_strip-36.0.0.crate
+Upstream declaration: Apache-2.0
+Selected: Apache-2.0
+Authors as published: ["강동윤 <kdy1997.dev@gmail.com>"]
+
+=== deno/swc_visit-2.0.1 ===
+Source: https://static.crates.io/crates/swc_visit/swc_visit-2.0.1.crate
+Upstream declaration: Apache-2.0
+Selected: Apache-2.0
+Authors as published: ["강동윤 <kdy1997.dev@gmail.com>"]
+
+=== deno/testing_macros-1.0.1 ===
+Source: https://static.crates.io/crates/testing_macros/testing_macros-1.0.1.crate
+Upstream declaration: Apache-2.0
+Selected: Apache-2.0
+Authors as published: ["강동윤 <kdy1997.dev@gmail.com>"]
+
+=== deno/winapi-i686-pc-windows-gnu-0.4.0 ===
+Source: https://static.crates.io/crates/winapi-i686-pc-windows-gnu/winapi-i686-pc-windows-gnu-0.4.0.crate
+Upstream declaration: MIT/Apache-2.0
+Selected: Apache-2.0
+Authors as published: ["Peter Atashian <retep998@gmail.com>"]
+
+winapi-i686-pc-windows-gnu-0.4.0/build.rs
+// Copyright © 2016-2018 winapi-rs developers
+// Licensed under the Apache License, Version 2.0
+// <LICENSE-APACHE or http://www.apache.org/licenses/LICENSE-2.0> or the MIT license
+// <LICENSE-MIT or http://opensource.org/licenses/MIT>, at your option.
+// All files in the project carrying such notice may not be copied, modified, or distributed
+// except according to those terms.
+
+
+winapi-i686-pc-windows-gnu-0.4.0/src/lib.rs
+// Copyright © 2016 winapi-rs developers
+// Licensed under the Apache License, Version 2.0
+// <LICENSE-APACHE or http://www.apache.org/licenses/LICENSE-2.0> or the MIT license
+// <LICENSE-MIT or http://opensource.org/licenses/MIT>, at your option.
+// All files in the project carrying such notice may not be copied, modified, or distributed
+// except according to those terms.
+
+
+=== deno/winapi-x86_64-pc-windows-gnu-0.4.0 ===
+Source: https://static.crates.io/crates/winapi-x86_64-pc-windows-gnu/winapi-x86_64-pc-windows-gnu-0.4.0.crate
+Upstream declaration: MIT/Apache-2.0
+Selected: Apache-2.0
+Authors as published: ["Peter Atashian <retep998@gmail.com>"]
+
+winapi-x86_64-pc-windows-gnu-0.4.0/build.rs
+// Copyright © 2016-2018 winapi-rs developers
+// Licensed under the Apache License, Version 2.0
+// <LICENSE-APACHE or http://www.apache.org/licenses/LICENSE-2.0> or the MIT license
+// <LICENSE-MIT or http://opensource.org/licenses/MIT>, at your option.
+// All files in the project carrying such notice may not be copied, modified, or distributed
+// except according to those terms.
+
+
+winapi-x86_64-pc-windows-gnu-0.4.0/src/lib.rs
+// Copyright © 2016 winapi-rs developers
+// Licensed under the Apache License, Version 2.0
+// <LICENSE-APACHE or http://www.apache.org/licenses/LICENSE-2.0> or the MIT license
+// <LICENSE-MIT or http://opensource.org/licenses/MIT>, at your option.
+// All files in the project carrying such notice may not be copied, modified, or distributed
+// except according to those terms.
+
+
+=== ffmpeg/winapi-i686-pc-windows-gnu-0.4.0 ===
+Source: https://static.crates.io/crates/winapi-i686-pc-windows-gnu/winapi-i686-pc-windows-gnu-0.4.0.crate
+Upstream declaration: MIT/Apache-2.0
+Selected: Apache-2.0
+Authors as published: ["Peter Atashian <retep998@gmail.com>"]
+
+winapi-i686-pc-windows-gnu-0.4.0/build.rs
+// Copyright © 2016-2018 winapi-rs developers
+// Licensed under the Apache License, Version 2.0
+// <LICENSE-APACHE or http://www.apache.org/licenses/LICENSE-2.0> or the MIT license
+// <LICENSE-MIT or http://opensource.org/licenses/MIT>, at your option.
+// All files in the project carrying such notice may not be copied, modified, or distributed
+// except according to those terms.
+
+
+winapi-i686-pc-windows-gnu-0.4.0/src/lib.rs
+// Copyright © 2016 winapi-rs developers
+// Licensed under the Apache License, Version 2.0
+// <LICENSE-APACHE or http://www.apache.org/licenses/LICENSE-2.0> or the MIT license
+// <LICENSE-MIT or http://opensource.org/licenses/MIT>, at your option.
+// All files in the project carrying such notice may not be copied, modified, or distributed
+// except according to those terms.
+
+
+=== ffmpeg/winapi-x86_64-pc-windows-gnu-0.4.0 ===
+Source: https://static.crates.io/crates/winapi-x86_64-pc-windows-gnu/winapi-x86_64-pc-windows-gnu-0.4.0.crate
+Upstream declaration: MIT/Apache-2.0
+Selected: Apache-2.0
+Authors as published: ["Peter Atashian <retep998@gmail.com>"]
+
+winapi-x86_64-pc-windows-gnu-0.4.0/build.rs
+// Copyright © 2016-2018 winapi-rs developers
+// Licensed under the Apache License, Version 2.0
+// <LICENSE-APACHE or http://www.apache.org/licenses/LICENSE-2.0> or the MIT license
+// <LICENSE-MIT or http://opensource.org/licenses/MIT>, at your option.
+// All files in the project carrying such notice may not be copied, modified, or distributed
+// except according to those terms.
+
+
+winapi-x86_64-pc-windows-gnu-0.4.0/src/lib.rs
+// Copyright © 2016 winapi-rs developers
+// Licensed under the Apache License, Version 2.0
+// <LICENSE-APACHE or http://www.apache.org/licenses/LICENSE-2.0> or the MIT license
+// <LICENSE-MIT or http://opensource.org/licenses/MIT>, at your option.
+// All files in the project carrying such notice may not be copied, modified, or distributed
+// except according to those terms.
+

@@ -1,0 +1,248 @@
+MIT AND CC0 DECLARATIONS AND COPYRIGHT NOTICES
+Source-package superset, not an actual binary component list.
+Full license texts: MIT.txt and CC0-1.0.txt.
+
+=== deno/aead-gcm-stream-0.4.0 ===
+Source: https://static.crates.io/crates/aead-gcm-stream/aead-gcm-stream-0.4.0.crate
+Upstream declaration and selected license: MIT
+Authors as published: ["Divy Srivastava <dj.srivastava23@gmail.com>"]
+
+=== deno/convert_case-0.4.0 ===
+Source: https://static.crates.io/crates/convert_case/convert_case-0.4.0.crate
+Upstream declaration and selected license: MIT
+Authors as published: ["David Purdum <purdum41@gmail.com>"]
+
+=== deno/deno_core_icudata-0.77.0 ===
+Source: https://static.crates.io/crates/deno_core_icudata/deno_core_icudata-0.77.0.crate
+Upstream declaration and selected license: MIT
+Authors as published: ["the Deno authors"]
+
+=== deno/deno_native_certs-0.3.0 ===
+Source: https://static.crates.io/crates/deno_native_certs/deno_native_certs-0.3.0.crate
+Upstream declaration and selected license: MIT
+Authors as published: ["Divy Srivastava <dj.srivastava23@gmail.com>"]
+
+=== deno/deno_tunnel-0.8.1 ===
+Source: https://static.crates.io/crates/deno_tunnel/deno_tunnel-0.8.1.crate
+Upstream declaration and selected license: MIT
+Authors as published: ["the Deno authors"]
+
+deno_tunnel-0.8.1/src/lib.rs
+// Copyright 2018-2025 the Deno authors. MIT license.
+
+
+
+=== deno/dlopen2-0.6.1 ===
+Source: https://static.crates.io/crates/dlopen2/dlopen2-0.6.1.crate
+Upstream declaration and selected license: MIT
+Authors as published: ["Szymon Wieloch <szymon.wieloch@gmail.com>", "Ahmed Masud <ahmed.masud@saf.ai>", "OpenByte <development.openbyte@gmail.com>"]
+
+dlopen2-0.6.1/src/lib.rs
+/*!
+
+Library for opening and working with dynamic link libraries (also known as shared object).
+
+# Overview
+
+This library is an effort to make use of dynamic link libraries in Rust simple.
+Previously existing solutions were either unsafe, provided huge overhead of required writing too much code to achieve simple things.
+I hope that this library will help you to quickly get what you need and avoid errors.
+
+# Quick example
+
+```no_run
+use dlopen2::wrapper::{Container, WrapperApi};
+
+#[derive(WrapperApi)]
+struct Api<'a> {
+    example_rust_fun: fn(arg: i32) -> u32,
+    example_c_fun: unsafe extern "C" fn(),
+    example_reference: &'a mut i32,
+    // A function or field may not always exist in the library.
+    example_c_fun_option: Option<unsafe extern "C" fn()>,
+    example_reference_option: Option<&'a mut i32>,
+}
+
+fn main() {
+    let mut cont: Container<Api> =
+        unsafe { Container::load("libexample.so") }.expect("Could not open library or load symbols");
+    cont.example_rust_fun(5);
+    unsafe { cont.example_c_fun() };
+    *cont.example_reference_mut() = 5;
+
+    // Optional functions return Some(result) if the function is present or None if absent.
+    unsafe { cont.example_c_fun_option() };
+    // Optional fields are Some(value) if present and None if absent.
+    if let Some(example_reference) = cont.example_reference_option() {
+        *example_reference = 5;
+    }
+}
+```
+
+# Features
+
+## Main features
+
+* Supports majority of platforms and is platform independent.
+* Is consistent with Rust error handling mechanism and makes making mistakes much more difficult.
+* Is very lightweight. It mostly uses zero cost wrappers to create safer abstractions over platform API.
+* Is thread safe.
+* Is object-oriented programming friendly.
+* Has a low-level API that provides full flexibility of using libraries.
+* Has two high-level APIs that protect against dangling symbols - each in its own way.
+* High level APIs support automatic loading of symbols into structures. You only need to define a
+    structure that represents an API. The rest happens automatically and requires only minimal amount of code.
+* Automatic loading of symbols helps you to follow the DRY paradigm.
+
+## Comparison with other libraries
+
+| Feature                            | dlopen2    | [libloading](https://github.com/nagisa/rust_libloading) | [sharedlib](https://github.com/Tyleo/sharedlib) |
+|------------------------------------|------------|---------------------------------------------------------|-------------------------------------------------|
+| Basic functionality                | Yes        | Yes        | Yes       |
+| Multiplatform                      | Yes        | Yes        | Yes       |
+| Dangling symbol prevention         | Yes        | Yes        | Yes       |
+| Thread safety                      | Yes        | **Potential problem with thread-safety of `dlerror()` on some platforms like FreeBSD** | **No support for SetErrorMode (library may block the application on Windows)** |
+| Loading of symbols into structures | Yes        | **No**     | **No** |
+| Overhead                           | Minimal    | Minimal    | **Some overhead** |
+| Low-level, unsafe API              | Yes        | Yes        | Yes       |
+| Object-oriented friendly           | Yes        | **No**       | Yes     |
+| Load from the program itself       | Yes        | **No**       | **No**  |
+| Obtaining address information (dladdr) | Yes    | **Unix only** | **No** |
+
+## Safety
+
+Please note that while Rust aims at being 100% safe language, it does not yet provide mechanisms that would allow me to create a 100% safe library, so I had to settle on 99%.
+Also the nature of dynamic link libraries requires casting obtained pointers into types that are defined on the application side. And this cannot be safe.
+Having said that I still think that this library provides the best approach and greatest safety possible in Rust.
+
+# Usage:
+
+Cargo.toml:
+
+```toml
+[dependencies]
+dlopen2 = "0.6"
+```
+
+# Documentation
+
+[Cargo documentation](https://docs.rs/dlopen2)
+
+[Examples](../examples)
+
+[Changelog](https://github.com/OpenByteDev/dlopen2/releases)
+
+# License
+This code is licensed under the [MIT](../LICENSE) license.
+
+# Acknowledgement
+
+Special thanks to [Simonas Kazlauskas](https://github.com/nagisa) whose [libloading](https://github.com/nagisa/rust_libloading) became code base for my project.
+
+# Comparison of APIs:
+
+* [**raw**](./raw/index.html) - a low-level API. It is mainly intended to give you full flexibility
+    if you decide to create you own custom solution for handling dynamic link libraries.
+    For typical operations you probably should use one of high-level APIs.
+
+* [**symbor**](./symbor/index.html) - a high-level API. It prevents dangling symbols by creating
+    zero cost structural wrappers around symbols obtained from the library. These wrappers use
+    Rust borrowing mechanism to make sure that the library will never get released before obtained
+    symbols.
+
+* [**wrapper**](./wrapper/index.html) - a high-level API. It prevents dangling symbols by creating
+    zero cost functional wrappers around symbols obtained from the library. These wrappers prevent
+    accidental copying of raw symbols from library API. Dangling symbols are prevented by keeping
+    library and its API in one structure - this makes sure that symbols and library are released
+    together.
+
+Additionally both high-level APIs provide a way to automatically load symbols into a structure using
+Rust reflection mechanism. Decision which API should be used is a matter of taste - please check
+documentation of both of them and use the one that you prefer.
+At the moment none seems to have any reasonable advantage over the other.
+
+*/
+
+=== deno/fqdn-0.5.2 ===
+Source: https://static.crates.io/crates/fqdn/fqdn-0.5.2.crate
+Upstream declaration and selected license: MIT
+Authors as published: ["Xophe <christophe.dousson@orange.com>"]
+
+=== deno/hexf-parse-0.2.1 ===
+Source: https://static.crates.io/crates/hexf-parse/hexf-parse-0.2.1.crate
+Upstream declaration and selected license: CC0-1.0
+Authors as published: ["Kang Seonghoon <public+rust@mearie.org>"]
+
+=== deno/rustls-tokio-stream-0.8.0 ===
+Source: https://static.crates.io/crates/rustls-tokio-stream/rustls-tokio-stream-0.8.0.crate
+Upstream declaration and selected license: MIT
+Authors as published: []
+
+rustls-tokio-stream-0.8.0/src/adapter.rs
+// Copyright 2018-2023 the Deno authors. All rights reserved. MIT license.
+
+
+rustls-tokio-stream-0.8.0/src/connection_stream.rs
+// Copyright 2018-2023 the Deno authors. All rights reserved. MIT license.
+
+
+rustls-tokio-stream-0.8.0/src/handshake.rs
+// Copyright 2018-2023 the Deno authors. All rights reserved. MIT license.
+
+
+rustls-tokio-stream-0.8.0/src/lib.rs
+// Copyright 2018-2023 the Deno authors. All rights reserved. MIT license.
+
+
+rustls-tokio-stream-0.8.0/src/stream.rs
+// Copyright 2018-2023 the Deno authors. All rights reserved. MIT license.
+
+
+
+rustls-tokio-stream-0.8.0/src/system_test/fastwebsockets.rs
+// Copyright 2018-2023 the Deno authors. All rights reserved. MIT license.
+
+
+rustls-tokio-stream-0.8.0/src/system_test/mod.rs
+// Copyright 2018-2023 the Deno authors. All rights reserved. MIT license.
+
+
+=== deno/sys_traits-0.1.28 ===
+Source: https://static.crates.io/crates/sys_traits/sys_traits-0.1.28.crate
+Upstream declaration and selected license: MIT
+Authors as published: []
+
+=== deno/sys_traits_macros-0.1.0 ===
+Source: https://static.crates.io/crates/sys_traits_macros/sys_traits_macros-0.1.0.crate
+Upstream declaration and selected license: MIT
+Authors as published: []
+
+=== ffmpeg/block-0.1.6 ===
+Source: https://static.crates.io/crates/block/block-0.1.6.crate
+Upstream declaration and selected license: MIT
+Authors as published: ["Steven Sheldon"]
+
+=== ffmpeg/difflib-0.4.0 ===
+Source: https://static.crates.io/crates/difflib/difflib-0.4.0.crate
+Upstream declaration and selected license: MIT
+Authors as published: ["Dima Kudosh <dimakudosh@gmail.com>"]
+
+=== ffmpeg/malloc_buf-0.0.6 ===
+Source: https://static.crates.io/crates/malloc_buf/malloc_buf-0.0.6.crate
+Upstream declaration and selected license: MIT
+Authors as published: ["Steven Sheldon"]
+
+=== ffmpeg/objc-foundation-0.1.1 ===
+Source: https://static.crates.io/crates/objc-foundation/objc-foundation-0.1.1.crate
+Upstream declaration and selected license: MIT
+Authors as published: ["Steven Sheldon"]
+
+=== ffmpeg/objc_id-0.1.1 ===
+Source: https://static.crates.io/crates/objc_id/objc_id-0.1.1.crate
+Upstream declaration and selected license: MIT
+Authors as published: ["Steven Sheldon"]
+
+=== ffmpeg/simd_helpers-0.1.0 ===
+Source: https://static.crates.io/crates/simd_helpers/simd_helpers-0.1.0.crate
+Upstream declaration and selected license: MIT
+Authors as published: ["Luca Barbato <lu_zero@gentoo.org>"]

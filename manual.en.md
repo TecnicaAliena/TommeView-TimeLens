@@ -1,4 +1,4 @@
-# TommeView 1.6.3 user manual
+# TommeView 1.6.4 user manual
 
 [Overview](README.en.md) · [Italian manual](manuale.it.md) · [Installation](INSTALLATION.md)
 

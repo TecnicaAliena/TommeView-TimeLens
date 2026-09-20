@@ -16,6 +16,13 @@ Qt Multimedia include inoltre FFmpeg 7.1.2 (LGPL-2.1-or-later), distinto dal FFm
 
 Gli [avvisi estesi Qt](licenses/Qt-SOURCE-NOTICES.txt) riportano attribuzioni e testi delle dipendenze presenti nei moduli sorgente Qt 6.10.2 raccolti. Comprendono anche strumenti, test e codice per altre piattaforme: non indicano che tutti questi componenti siano installati con TommeView.
 
+Gli [avvisi Apache-2.0](licenses/Apache-DECLARED-NOTICES.txt) conservano dichiarazioni e copyright originali dei componenti elencati, accompagnati dal [testo completo](licenses/Apache-2.0.txt). La scelta Apache-2.0 riguarda questi componenti, non il codice originale di TommeView.
+
+Gli [avvisi MIT e CC0](licenses/MIT-CC0-DECLARED-NOTICES.txt) conservano le
+dichiarazioni dei pacchetti, gli autori pubblicati e le intestazioni originali
+disponibili nei sorgenti. I testi completi sono [MIT](licenses/MIT.txt) e
+[CC0-1.0](licenses/CC0-1.0.txt); non modificano la licenza di TommeView.
+
 ## Verifica FFmpeg
 
 Il binario usato è la variante shared: `--enable-shared --disable-static`, senza `--enable-gpl` né `--enable-nonfree`, e con `--disable-libx264` e `--disable-libx265`. L'output completo e l'hash sono in [`ffmpeg-build-config.txt`](ffmpeg-build-config.txt). Questa è evidenza della configurazione, non una certificazione legale o brevettuale.

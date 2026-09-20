@@ -1,0 +1,49 @@
+{
+  "status": "Source-archive manifest for the TommeView 1.6.4 release; it records delivery evidence and is not legal certification.",
+  "download_tools_manifest_sha256": "c9af00e3bd609686bbc526e77ae4738f0996f3ebaa37b3fcb6a93ad2fec3370c",
+  "parts": [
+    {
+      "file": "TommeView-dependency-sources-part-001.zip",
+      "bytes": 513433387,
+      "sha256": "68f6f99940933bab1eafc38ff2e7051f31f41bc0ffc28950ff1ce754f9dd8ea8",
+      "source_archives": 1099
+    },
+    {
+      "file": "TommeView-dependency-sources-part-002.zip",
+      "bytes": 462735515,
+      "sha256": "6c17d566247e5596fd32ec427e6352ee186c1df1cdedf41d1c4e275895e5281d",
+      "source_archives": 629
+    },
+    {
+      "file": "TommeView-dependency-sources-part-003.zip",
+      "bytes": 174659179,
+      "sha256": "d65b965e91d8d36ef144bafc60ddfe64ca073e5ca8a0e660704572004258c823",
+      "source_archives": 12
+    },
+    {
+      "file": "TommeView-dependency-sources-part-004.zip",
+      "bytes": 516161835,
+      "sha256": "dc5f875b4d6bbb93632d2eae996270a1a5a1dbc681cf2632aba59fa1ab0efeac",
+      "source_archives": 15
+    },
+    {
+      "file": "TommeView-dependency-sources-part-005.zip",
+      "bytes": 533729741,
+      "sha256": "81c340c1eba812d958c767a7a86d3c64377370111c36a6f4fb3275d4855514e2",
+      "source_archives": 128
+    },
+    {
+      "file": "TommeView-dependency-sources-part-006.zip",
+      "bytes": 167265248,
+      "sha256": "3ece585544b161fc11ebec0da85e30d1f5a8a52407f440e9a0e4fc4c90909cd9",
+      "source_archives": 61
+    }
+  ],
+  "source_archives": 1944,
+  "unresolved_selected_source_entries": [],
+  "selection_notes": [
+    "Exact Git fallbacks replace failed HTTP downloads at the same repository revision.",
+    "The disabled x265 and test/demo-only source-superset entries are not selected.",
+    "Failed Deno upstream notice supplements do not replace the checksum-verified published crate sources included in the parts."
+  ]
+}
