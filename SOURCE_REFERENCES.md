@@ -1,15 +1,15 @@
 # Dependency sources — TommeView 1.6.4
 
-The TommeView application source code is private and is **not** part of this
-delivery. This page concerns only the third-party software distributed with the
-Windows package.
+TommeView's original application source is published in this repository under
+GPL-3.0-or-later. This page concerns only the third-party software distributed
+with the Windows package.
 
 The release named `v1.6.4` provides six `TommeView-dependency-sources-…` ZIP
 assets, together with their SHA-256 hashes. The complete asset list, each
 upstream URL, version/commit and archive hash is in
 [dependency-source-inventory.json](dependency-source-inventory.json). The
-assets contain 1,944 checksum-verified upstream source archives and no project
-source, private history, credentials, annotations or user videos.
+assets contain 1,944 checksum-verified upstream source archives and no former
+private Git history, credentials, annotations or user videos.
 
 Download every part before relying on the source delivery. Each ZIP has a
 `SOURCE-INDEX.json` which maps its members to upstream URLs, commits and hashes.
@@ -34,5 +34,5 @@ The packages are source archives, not prebuilt replacements and not a promise
 that every archive can be rebuilt identically in a particular environment.
 They preserve the source delivery and attribution evidence for the versions
 released with TommeView 1.6.4. See [third-party licenses](THIRD_PARTY_LICENSES.md),
-[library replacement instructions](LIBRARY_REPLACEMENT.md) and
-[application terms](APPLICATION_LICENSE.txt).
+[library replacement instructions](LIBRARY_REPLACEMENT.md) and the project
+[GPL license](LICENSE).

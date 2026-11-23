@@ -1,0 +1,33 @@
+# Python environments and caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+.venv-build/
+venv/
+.coverage
+htmlcov/
+
+# Generated bundles, installers, reports, and downloaded build tools
+/build/
+/dist/
+/release/
+/test-output/
+/tools/
+/.build-data-backups/
+*.log
+
+# Personal annotations and local credentials
+/data/
+/sessions/
+.env
+.env.*
+!.env.example
+*.pfx
+*.p12
+*.pem
+*.key
+
+# Windows metadata
+Thumbs.db
+Desktop.ini

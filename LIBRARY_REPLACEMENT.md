@@ -1,9 +1,9 @@
 # Library replacement
 
 TommeView uses PySide6 and selected Qt modules under LGPLv3 and FFmpeg libraries
-under their respective LGPL licenses. Libraries are separate files. TommeView's
-terms permit replacement with compatible versions and reverse engineering to
-debug modifications to LGPL libraries.
+under their respective LGPL licenses. Libraries are separate files. GPL-3.0-or-later
+for TommeView's original source does not restrict replacement with compatible
+versions or reverse engineering to debug modifications to LGPL libraries.
 
 For a Windows distribution based on the current package:
 

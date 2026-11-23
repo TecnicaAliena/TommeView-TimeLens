@@ -1,0 +1,362 @@
+{
+  "Scarica da YouTube": {"it": "Scarica da YouTube", "en": "Download from YouTube"},
+  "Link del video": {"it": "Link del video", "en": "Video link"},
+  "Scegli cartella": {"it": "Scegli cartella", "en": "Choose folder"},
+  "Cartella acquisizioni": {"it": "Cartella acquisizioni", "en": "Acquisition folder"},
+  "Apri il video al termine": {"it": "Apri il video al termine", "en": "Open video when finished"},
+  "Scarica": {"it": "Scarica", "en": "Download"},
+  "Annulla download": {"it": "Annulla download", "en": "Cancel download"},
+  "Apri cartella": {"it": "Apri cartella", "en": "Open folder"},
+  "Download annullato": {"it": "Download annullato", "en": "Download cancelled"},
+  "Annullamento in corso": {"it": "Annullamento in corso...", "en": "Cancelling..."},
+  "Download completato": {"it": "Download completato", "en": "Download complete"},
+  "youtube_notice": {"it": "Prima di scaricare, verifica che il download sia consentito dalle condizioni di YouTube e dalla normativa applicabile, e di disporre dei diritti e delle autorizzazioni necessari. Un video pubblico, l'uso personale o il solo consenso dell'autore non costituiscono automaticamente un'autorizzazione al download dal servizio. La verifica spetta a te. TommeView non è affiliato né approvato da YouTube. Questo avviso non esclude le responsabilità previste dalla legge. Non vengono importati cookie o credenziali del browser.", "en": "Before downloading, verify that the download is permitted by YouTube's terms and applicable law, and that you have the necessary rights and permissions. A public video, personal use or the creator's consent alone does not automatically authorize downloading from the service. You are responsible for this verification. TommeView is not affiliated with or endorsed by YouTube. This notice does not exclude liability imposed by law. Browser cookies and credentials are not imported."},
+  "youtube_terms": {"it": "Leggi le condizioni di YouTube", "en": "Read YouTube's terms"},
+  "youtube_acknowledgement": {"it": "Ho letto l'avviso e verificato che questo download è consentito.", "en": "I have read the notice and verified that this download is permitted."},
+  "youtube_quality": {"it": "Massima risoluzione disponibile, poi FPS e qualità. Audio migliore; unione senza ricompressione. Un solo video, non playlist.", "en": "Highest available resolution, then FPS and quality. Best audio; merge without re-encoding. Single video, not playlists."},
+  "youtube_downloading": {"it": "Acquisizione e unione in corso. La percentuale si riferisce al flusso corrente (video o audio).", "en": "Downloading and merging. Percentage refers to the current stream (video or audio)."},
+  "youtube_failed": {"it": "Acquisizione non riuscita. Vedi i dettagli sotto: il video potrebbe essere limitato o il downloader richiedere un aggiornamento.", "en": "Acquisition failed. See details below: the video may be restricted or the downloader may need updating."},
+  "youtube_invalid_url": {"it": "Inserisci un link YouTube valido a un singolo video.", "en": "Enter a valid YouTube link to a single video."},
+  "youtube_missing_tools": {"it": "Strumenti di acquisizione mancanti. Eseguire prepare-download-tools.ps1 nella cartella del progetto o reinstallare un pacchetto completo.", "en": "Acquisition tools are missing. Run prepare-download-tools.ps1 in the project folder or reinstall a complete package."},
+  "youtube_missing_result": {"it": "Il downloader non ha prodotto un file video valido.", "en": "The downloader did not produce a valid video file."},
+  "Descrizione": {"it": "Descrizione", "en": "Description"},
+  "Modifica descrizione tag": {"it": "Modifica descrizione tag", "en": "Edit tag description"},
+  "Descrizione tag {flag}": {"it": "Descrizione tag {flag}", "en": "Description for tag {flag}"},
+  "Solo video (F10)": {"it": "Solo video (F10)", "en": "Video only (F10)"},
+  "TommeView - Video e intertempi": {
+    "it": "TommeView - Video e intertempi",
+    "en": "TommeView - Video timing"
+  },
+  "Nessun video aperto": {
+    "it": "Nessun video aperto",
+    "en": "No video open"
+  },
+  "Posizione video": {
+    "it": "Posizione video",
+    "en": "Video position"
+  },
+  "Apri video": {
+    "it": "Apri video",
+    "en": "Open video"
+  },
+  "Nessun file": {
+    "it": "Nessun file",
+    "en": "No file"
+  },
+  "Mostra/nascondi pannello flag": {
+    "it": "Mostra/nascondi pannello flag",
+    "en": "Show/hide markers panel"
+  },
+  "Schermo intero (F11)": {
+    "it": "Schermo intero (F11)",
+    "en": "Fullscreen (F11)"
+  },
+  "Informazioni su TommeView": {
+    "it": "Informazioni su TommeView",
+    "en": "About TommeView"
+  },
+  "Riproduci / pausa (Spazio)": {
+    "it": "Riproduci / pausa (Spazio)",
+    "en": "Play / pause (Space)"
+  },
+  "Torna all'inizio": {
+    "it": "Torna all'inizio",
+    "en": "Go to start"
+  },
+  "Riduci velocita (-)": {
+    "it": "Riduci velocita (-)",
+    "en": "Decrease speed (-)"
+  },
+  "Aumenta velocita (+)": {
+    "it": "Aumenta velocita (+)",
+    "en": "Increase speed (+)"
+  },
+  "Velocita di riproduzione": {
+    "it": "Velocita di riproduzione",
+    "en": "Playback speed"
+  },
+  "Audio attivo / muto": {
+    "it": "Audio attivo / muto",
+    "en": "Sound on / mute"
+  },
+  "Volume": {
+    "it": "Volume",
+    "en": "Volume"
+  },
+  "Flag  |  {count}": {
+    "it": "Flag  |  {count}",
+    "en": "Markers  |  {count}"
+  },
+  "Flag  |  0": {
+    "it": "Flag  |  0",
+    "en": "Markers  |  0"
+  },
+  "Esporta tempi e intertempi in CSV": {
+    "it": "Esporta tempi e intertempi in CSV",
+    "en": "Export times, intervals and cumulative times as CSV"
+  },
+  "Aggiungi flag {flag}": {
+    "it": "Aggiungi flag {flag}",
+    "en": "Add marker {flag}"
+  },
+  "Tutte le flag": {
+    "it": "Tutte le flag",
+    "en": "All labels"
+  },
+  "Flag {flag}": {
+    "it": "Flag {flag}",
+    "en": "Label {flag}"
+  },
+  "Flag": {
+    "it": "Flag",
+    "en": "Label"
+  },
+  "Tempo (s)": {
+    "it": "Tempo (s)",
+    "en": "Time (s)"
+  },
+  "Intertempo (s)": {
+    "it": "Intertempo (s)",
+    "en": "Interval (s)"
+  },
+  "Cumulato (s)": {
+    "it": "Cumulato (s)",
+    "en": "Cumulative (s)"
+  },
+  "Tempo (ms)": {
+    "it": "Tempo (ms)",
+    "en": "Time (ms)"
+  },
+  "Intertempo (ms)": {
+    "it": "Intertempo (ms)",
+    "en": "Interval (ms)"
+  },
+  "Cumulato (ms)": {
+    "it": "Cumulato (ms)",
+    "en": "Cumulative (ms)"
+  },
+  "Nessuna sessione": {
+    "it": "Nessuna sessione",
+    "en": "No session"
+  },
+  "Pronto": {
+    "it": "Pronto",
+    "en": "Ready"
+  },
+  "Video (*.mp4 *.mkv *.avi *.mov *.wmv *.webm *.m4v *.mpg *.mpeg *.mts *.m2ts);;Tutti i file (*)": {
+    "it": "Video (*.mp4 *.mkv *.avi *.mov *.wmv *.webm *.m4v *.mpg *.mpeg *.mts *.m2ts);;Tutti i file (*)",
+    "en": "Video (*.mp4 *.mkv *.avi *.mov *.wmv *.webm *.m4v *.mpg *.mpeg *.mts *.m2ts);;All files (*)"
+  },
+  "Autore: {author}": {
+    "it": "Autore: {author}",
+    "en": "Author: {author}"
+  },
+  "support": {
+    "it": "Se TommeView ti piace, offri un caff\u00e8 o una birra al creatore del programma, Marco Tommesani. Grazie!",
+    "en": "If you enjoy TommeView, buy its creator, Marco Tommesani, a coffee or a beer. Thank you!"
+  },
+  "Annotazioni: {path}": {
+    "it": "Annotazioni: {path}",
+    "en": "Annotations: {path}"
+  },
+  "Apri cartella annotazioni": {
+    "it": "Apri cartella annotazioni",
+    "en": "Open annotations folder"
+  },
+  "Importa flag...": {
+    "it": "Importa flag...",
+    "en": "Import markers..."
+  },
+  "Chiudi": {
+    "it": "Chiudi",
+    "en": "Close"
+  },
+  "Cartella non accessibile": {
+    "it": "Cartella non accessibile",
+    "en": "Cannot access folder"
+  },
+  "Seleziona la cartella data o sessions della versione precedente": {
+    "it": "Seleziona la cartella data o sessions della versione precedente",
+    "en": "Select the data or sessions folder from the previous version"
+  },
+  "import_report": {
+    "it": "Sessioni importate: {imported}\nGia presenti, conservate: {skipped}\nErrori di importazione: {errors}",
+    "en": "Sessions imported: {imported}\nExisting sessions preserved: {skipped}\nImport errors: {errors}"
+  },
+  "Importazione flag": {
+    "it": "Importazione flag",
+    "en": "Import markers"
+  },
+  "File non trovato": {
+    "it": "File non trovato",
+    "en": "File not found"
+  },
+  "Sessione non leggibile": {
+    "it": "Sessione non leggibile",
+    "en": "Cannot read session"
+  },
+  "session_read_error": {
+    "it": "{error}\nIl file originale viene conservato. Puoi esportare le nuove flag in CSV.",
+    "en": "{error}\nThe original file is preserved. You can export new markers as CSV."
+  },
+  "Salvataggio automatico attivo": {
+    "it": "Salvataggio automatico attivo",
+    "en": "Autosave enabled"
+  },
+  "Sessione non leggibile: usa Esporta CSV": {
+    "it": "Sessione non leggibile: usa Esporta CSV",
+    "en": "Cannot read session: use Export CSV"
+  },
+  "Riproduzione": {
+    "it": "Riproduzione",
+    "en": "Playing"
+  },
+  "In pausa": {
+    "it": "In pausa",
+    "en": "Paused"
+  },
+  "Errore video: {error}": {
+    "it": "Errore video: {error}",
+    "en": "Video error: {error}"
+  },
+  "Riproduzione non riuscita": {
+    "it": "Riproduzione non riuscita",
+    "en": "Playback failed"
+  },
+  "Fine video": {
+    "it": "Fine video",
+    "en": "End of video"
+  },
+  "Elimina punto": {
+    "it": "Elimina punto",
+    "en": "Delete marker"
+  },
+  "Flag salvate automaticamente": {
+    "it": "Flag salvate automaticamente",
+    "en": "Session saved automatically"
+  },
+  "Salvataggio fallito: esporta in CSV": {
+    "it": "Salvataggio fallito: esporta in CSV",
+    "en": "Save failed: export as CSV"
+  },
+  "Salvataggio fallito": {
+    "it": "Salvataggio fallito",
+    "en": "Save failed"
+  },
+  "Esporta tempi": {
+    "it": "Esporta tempi",
+    "en": "Export times"
+  },
+  "CSV (*.csv)": {
+    "it": "CSV (*.csv)",
+    "en": "CSV (*.csv)"
+  },
+  "CSV esportato: {path}": {
+    "it": "CSV esportato: {path}",
+    "en": "CSV exported: {path}"
+  },
+  "Esportazione fallita": {
+    "it": "Esportazione fallita",
+    "en": "Export failed"
+  },
+  "Ruota 90 gradi in senso antiorario": {
+    "it": "Ruota 90 gradi in senso antiorario",
+    "en": "Rotate 90 degrees counterclockwise"
+  },
+  "Ruota 90 gradi in senso orario": {
+    "it": "Ruota 90 gradi in senso orario",
+    "en": "Rotate 90 degrees clockwise"
+  },
+  "Cancella tutti i punti del video": {
+    "it": "Cancella tutti i punti del video",
+    "en": "Clear all markers for this video"
+  },
+  "Reset database": {
+    "it": "Reset database",
+    "en": "Reset database"
+  },
+  "confirm_clear": {
+    "it": "Cancellare tutti i punti del video attivo? L'operazione non puo essere annullata. La rotazione del video viene conservata.",
+    "en": "Delete all markers for the current video? This cannot be undone. Video rotation will be preserved."
+  },
+  "confirm_reset": {
+    "it": "Cancellare punti e rotazioni salvati per TUTTI i video? L'operazione non puo essere annullata. La lingua scelta e i file video originali vengono conservati.",
+    "en": "Delete saved markers and rotations for ALL videos? This cannot be undone. Your language setting and original video files will be preserved."
+  },
+  "Conferma": {
+    "it": "Conferma",
+    "en": "Confirm"
+  },
+  "Annulla": {
+    "it": "Annulla",
+    "en": "Cancel"
+  },
+  "Operazione non riuscita": {
+    "it": "Operazione non riuscita",
+    "en": "Operation failed"
+  },
+  "Punti cancellati": {
+    "it": "Punti cancellati",
+    "en": "Markers cleared"
+  },
+  "Database azzerato": {
+    "it": "Database azzerato",
+    "en": "Database reset"
+  },
+  "Italiano": {
+    "it": "Italiano",
+    "en": "Italian"
+  },
+  "English": {
+    "it": "English",
+    "en": "English"
+  },
+  "invalid_session": {
+    "it": "Formato della sessione non valido",
+    "en": "Invalid session format"
+  },
+  "invalid_rotation": {
+    "it": "Rotazione salvata non valida",
+    "en": "Invalid saved rotation"
+  },
+  "invalid_marker": {
+    "it": "Flag salvata non valida",
+    "en": "Invalid saved marker"
+  },
+  "session_video_mismatch": {
+    "it": "Il video della sessione non corrisponde",
+    "en": "Session video does not match"
+  },
+  "Riproduci avanti / pausa": {
+    "it": "Riproduci avanti / pausa",
+    "en": "Play forward / pause"
+  },
+  "Riproduci indietro / pausa": {
+    "it": "Riproduci indietro / pausa",
+    "en": "Play backward / pause"
+  },
+  "Riproduzione inversa": {
+    "it": "Riproduzione inversa",
+    "en": "Reverse playback"
+  },
+  "third_party_notice": {
+    "it": "TommeView utilizza PySide6 e moduli Qt sotto LGPLv3 e altri componenti con le rispettive licenze. È consentito sostituire le librerie LGPL con versioni compatibili e svolgere reverse engineering per il debug delle loro modifiche. Testi delle licenze inclusi; istruzioni in LIBRARY_REPLACEMENT.md nella cartella dell'app.",
+    "en": "TommeView uses PySide6 and Qt modules under LGPLv3 and other components under their respective licenses. You may replace LGPL libraries with compatible versions and reverse engineer to debug modifications to them. License texts are included; instructions are in LIBRARY_REPLACEMENT.md in the application folder."
+  },
+  "Apri licenze": {
+    "it": "Apri licenze",
+    "en": "Open licenses"
+  },
+  "Licenze": {
+    "it": "Licenze",
+    "en": "Licenses"
+  },
+  "license_folder_unavailable": {
+    "it": "Impossibile aprire la cartella delle licenze. Consulta la cartella licenses nella directory dell'applicazione.",
+    "en": "Could not open the license folder. Please see the licenses folder in the application directory."
+  },
+  "Preferenze non salvate": {
+    "it": "Preferenze non salvate",
+    "en": "Could not save preferences"
+  }
+}

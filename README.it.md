@@ -85,4 +85,7 @@ Per segnalare un problema, prepara la versione di TommeView, la versione di Wind
 
 Le proposte di funzioni e miglioramenti sono raccolte nelle [GitHub Issues](https://github.com/TecnicaAliena/TommeView-TimeLens/issues).
 
-Questo repository ospita presentazione e documentazione pubblica. Non contiene i sorgenti dell'applicazione né la cronologia del repository privato. Le licenze dei componenti esterni non attribuiscono automaticamente la stessa licenza a TommeView. Vedi [diritti e componenti esterni](RIGHTS.md).
+Il codice originale di TommeView è disponibile con licenza
+[GPL-3.0-or-later](LICENSE); istruzioni di compilazione e contributo sono in
+inglese. La cronologia privata precedente non è stata pubblicata. Le licenze
+dei componenti esterni restano separate. Vedi [diritti e componenti esterni](RIGHTS.md).

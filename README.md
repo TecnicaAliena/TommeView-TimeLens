@@ -39,6 +39,15 @@ and frame rate before interpreting them as real machine timings.
 
 Download **TommeView 1.6.4** from the [releases](https://github.com/TecnicaAliena/TommeView-TimeLens/releases) page. Third-party dependency source assets are separate from the installer; see [references](SOURCE_REFERENCES.md) and [delivery instructions](SOURCE_DELIVERY.md). Python and VLC are not required. Installation is per user; Explorer integration is optional.
 
+## Open source
+
+TommeView's original source code is available under
+[GPL-3.0-or-later](LICENSE). Build instructions are in
+[BUILDING.md](BUILDING.md); contribution guidance is in
+[CONTRIBUTING.md](CONTRIBUTING.md). Third-party components retain their own
+licenses and notices. The project name and logo follow the separate
+[project-identity policy](TRADEMARKS.md).
+
 ## About the creator
 
 I'm **Marco Tommesani**, known on GitHub as **TecnicaAliena**. I developed and
@@ -69,5 +78,5 @@ See [support](SUPPORT.md).
 
 Feature and improvement suggestions are collected in [GitHub Issues](https://github.com/TecnicaAliena/TommeView-TimeLens/issues).
 
-This repository contains public documentation, not application source or private
-history. See [rights and third-party components](RIGHTS.md).
+This repository contains TommeView's public source code without the former
+private Git history. See [rights and third-party components](RIGHTS.md).

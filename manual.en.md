@@ -115,7 +115,8 @@ a forced shutdown may leave a `.tommeview-download-*` directory.
 
 `--data-dir` is the session directory; preferences live in its parent and automatic
 legacy-session lookup is disabled. Paste YouTube links into the acquisition dialog,
-not the CLI. `--demo` requires a separate fixture, not distributed. The executable
+not the CLI. `--demo` uses the separate `demo/demo.avi` source-test fixture;
+the executable and installer do not bundle it. The executable
 does not provide a console.
 
 For problems, see [Support](SUPPORT.md). Do not submit confidential footage or personal data.

@@ -120,7 +120,8 @@ temporanea; uno spegnimento forzato può lasciare una cartella `.tommeview-downl
 
 `--data-dir` è la cartella delle sessioni; le preferenze vengono salvate nella
 cartella padre e la ricerca automatica delle vecchie sessioni viene disabilitata.
-Gli URL YouTube vanno nel dialogo, non nella riga di comando. `--demo` richiede
-una fixture separata, non distribuita. L'eseguibile non dispone di console.
+Gli URL YouTube vanno nel dialogo, non nella riga di comando. `--demo` usa la
+fixture separata `demo/demo.avi`, inclusa solo nei sorgenti e non nell'eseguibile
+o nell'installer. L'eseguibile non dispone di console.
 
 Per problemi consulta [Supporto](SUPPORT.md). Non inviare video riservati o dati personali.
