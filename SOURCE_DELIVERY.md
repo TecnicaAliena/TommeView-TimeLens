@@ -7,5 +7,5 @@ Every archive contains `SOURCE-INDEX.json`, mapping each source archive to its
 upstream URL, revision and hash.
 
 These assets contain third-party component sources only. They do not include
-TommeView's private original code, private history, annotations, videos or
-credentials. They are not required to install or use the application.
+TommeView application source code, former private history, annotations, videos
+or credentials. They are not required to install or use the application.
