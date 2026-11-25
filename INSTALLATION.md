@@ -1,8 +1,8 @@
 # Installation
 
-These instructions describe the public TommeView 1.6.5 Windows package.
+These instructions describe the TommeView 1.6.6 Windows packages.
 
-1. Download `TommeViewSetup-1.6.5.exe` from this repository's Releases page.
+1. Download `TommeViewSetup-1.6.6.exe` from this repository's Releases page.
 2. Run it and choose English or Italian. Python and VLC are not required.
 3. Installation is per user, normally under `%LOCALAPPDATA%\Programs\TommeView`,
    without administrator privileges.
@@ -12,6 +12,9 @@ These instructions describe the public TommeView 1.6.5 Windows package.
    selection in **Open with**.
 5. Start TommeView and open a video you are allowed to use. No demo video is
    included in the installer.
+
+For portable use, extract `TommeView-1.6.6-Windows-x64.zip` and open
+`TommeView.exe` inside the extracted folder.
 
 ## System requirements
 

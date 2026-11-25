@@ -3,25 +3,28 @@ import os
 import sys
 import threading
 import time
+from dataclasses import replace
 from pathlib import Path
 
 os.environ.setdefault('QT_MEDIA_BACKEND', 'ffmpeg')
 
-from PySide6.QtCore import QEvent, QRect, QSize, QStandardPaths, Qt, QTimer, QUrl, Signal
+from PySide6.QtCore import QEvent, QRect, QRectF, QSize, QStandardPaths, Qt, QTimer, QUrl, Signal
 from PySide6.QtGui import QColor, QDesktopServices, QFont, QIcon, QImage, QPainter, QPen, QTransform
 from PySide6.QtMultimedia import QAudioOutput, QMediaPlayer, QVideoFrame, QVideoSink
 from PySide6.QtWidgets import (QApplication, QComboBox, QDialog, QDialogButtonBox, QFileDialog, QFrame,
-    QGridLayout, QHBoxLayout, QHeaderView, QLabel, QMainWindow, QMenu, QMessageBox,
+    QDoubleSpinBox, QFormLayout, QGridLayout, QHBoxLayout, QHeaderView, QLabel, QMainWindow, QMenu, QMessageBox,
     QPushButton, QSizePolicy, QSlider, QSplitter, QStyle, QTableWidget, QTableWidgetItem,
-    QToolButton, QVBoxLayout, QWidget, QInputDialog)
+    QSpinBox, QToolButton, QVBoxLayout, QWidget, QInputDialog)
 
-from model import COLORS, RATES, Markers, SessionStore, export_csv, seconds
+from model import COLORS, RATES, Markers, PlaybackZone, SessionStore, export_csv, seconds
 from app_info import APP_NAME, APP_VERSION, APP_AUTHOR
 from localization import RESOURCES, Translator
 from acquisition_ui import AcquisitionDialog
 from ytdlp_update import check_for_update
 
 BASE = Path(sys.executable).parent if getattr(sys, 'frozen', False) else Path(__file__).parent
+FULL_FRAME = (0.0, 0.0, 1.0, 1.0)
+ZONE_LANES = {'zoom': (48, '#6db6ff'), 'speed': (68, '#bd96f5')}
 
 
 def default_session_dir():
@@ -54,6 +57,7 @@ QStatusBar { color: #a5b1ba; background: #20252a; }
 class VideoSurface(QWidget):
     clicked = Signal()
     doubleClicked = Signal()
+    regionSelected = Signal(tuple)
 
     def __init__(self):
         super().__init__()
@@ -64,6 +68,11 @@ class VideoSurface(QWidget):
         self.empty_text = 'Nessun video aperto'
         self.ms = 0
         self.rate = 100
+        self.zoom_from = self.zoom_to = FULL_FRAME
+        self.zoom_started = self.zoom_until = 0
+        self.selecting_region = False
+        self.selection_origin = None
+        self.selection = QRectF()
         self.flash_flags = []
         self.video_only = False
         self.setMinimumSize(320, 180)
@@ -81,20 +90,63 @@ class VideoSurface(QWidget):
         self.flash_timer.stop()
         self.update()
 
+    def zoom_region(self, now):
+        if now >= self.zoom_until:
+            return self.zoom_to
+        progress = (now - self.zoom_started) / (self.zoom_until - self.zoom_started)
+        ease = progress * progress * (3 - 2 * progress)
+        return tuple(a + (b - a) * ease for a, b in zip(self.zoom_from, self.zoom_to))
+
+    def set_zoom(self, region, duration_ms=0):
+        now = time.monotonic()
+        self.zoom_from, self.zoom_to = self.zoom_region(now), region
+        self.zoom_started = now
+        self.zoom_until = now + duration_ms / 1000
+        self.update()
+
+    def image_angle(self):
+        return (self.rotation + self.native_rotation) % 360
+
+    def fit_scale(self, width, height):
+        available = self.size().transposed() if self.image_angle() in (90, 270) else self.size()
+        return min(available.width() / width, available.height() / height)
+
+    def full_image_transform(self):
+        width, height = self.image.width(), self.image.height()
+        scale = self.fit_scale(width, height)
+        transform = QTransform.fromTranslate(self.width() / 2, self.height() / 2)
+        transform.rotate(self.image_angle())
+        transform.scale(-scale if self.native_mirrored else scale, scale)
+        transform.translate(-width / 2, -height / 2)
+        return transform
+
+    def select_region(self, enabled):
+        self.selecting_region = enabled
+        self.selection_origin = None
+        self.selection = QRectF()
+        self.setCursor(Qt.CursorShape.CrossCursor if enabled else Qt.CursorShape.ArrowCursor)
+        self.update()
+
+    def update_selection(self, position):
+        bounds = self.full_image_transform().mapRect(QRectF(self.image.rect()))
+        self.selection = QRectF(self.selection_origin, position).normalized().intersected(bounds)
+        self.update()
+
     def paintEvent(self, event):
         p = QPainter(self)
         p.fillRect(self.rect(), QColor('#080a0c'))
         if not self.image.isNull():
             p.save()
-            angle = (self.rotation + self.native_rotation) % 360
-            available = self.size().transposed() if angle in (90, 270) else self.size()
-            size = self.image.size().scaled(available, Qt.AspectRatioMode.KeepAspectRatio)
+            left, top, right, bottom = FULL_FRAME if self.selecting_region else self.zoom_region(time.monotonic())
+            width, height = self.image.width(), self.image.height()
+            crop = QRectF(left * width, top * height, (right - left) * width, (bottom - top) * height)
+            scale = self.fit_scale(crop.width(), crop.height())
+            w, h = crop.width() * scale, crop.height() * scale
             p.translate(self.width() / 2, self.height() / 2)
-            p.rotate(angle)
+            p.rotate(self.image_angle())
             if self.native_mirrored:
                 p.scale(-1, 1)
-            dest = QRect(-size.width() // 2, -size.height() // 2, size.width(), size.height())
-            p.drawImage(dest, self.image)
+            p.drawImage(QRectF(-w / 2, -h / 2, w, h), self.image, crop)
             p.restore()
         else:
             p.setPen(QColor('#84929d'))
@@ -112,7 +164,7 @@ class VideoSurface(QWidget):
             rate_box = QRect(self.width() - 105, self.height() - 52, 89, 32)
             p.fillRect(rate_box, QColor(0, 0, 0, 195))
             p.setPen(QColor('#4bd6bd'))
-            p.drawText(rate_box, Qt.AlignmentFlag.AlignCenter, f'{self.rate}%')
+            p.drawText(rate_box, Qt.AlignmentFlag.AlignCenter, f'{self.rate:g}%')
         if self.flash_flags:
             # Multiple markers crossed in one decoded frame remain visible together.
             for index, flag in enumerate(self.flash_flags):
@@ -122,37 +174,89 @@ class VideoSurface(QWidget):
                 p.setPen(QColor(COLORS[flag]))
                 p.setFont(QFont('Segoe UI', 42, QFont.Weight.Bold))
                 p.drawText(rect, Qt.AlignmentFlag.AlignCenter, str(flag))
+        if self.selecting_region and not self.selection.isEmpty():
+            p.setPen(QPen(QColor(ZONE_LANES['zoom'][1]), 2))
+            p.setBrush(QColor(109, 182, 255, 45))
+            p.drawRect(self.selection)
+
+    def mousePressEvent(self, event):
+        if self.selecting_region and not self.image.isNull() and event.button() == Qt.MouseButton.LeftButton:
+            self.selection_origin = event.position()
+
+    def mouseMoveEvent(self, event):
+        if self.selection_origin is not None:
+            self.update_selection(event.position())
 
     def mouseReleaseEvent(self, event):
         if event.button() == Qt.MouseButton.LeftButton:
-            self.clicked.emit()
+            if not self.selecting_region:
+                self.clicked.emit()
+            elif self.selection_origin is not None:
+                self.update_selection(event.position())
+                self.selection_origin = None
+                if self.selection.width() >= 8 and self.selection.height() >= 8:
+                    transform, _ = self.full_image_transform().inverted()
+                    crop = transform.mapRect(self.selection)
+                    width, height = self.image.width(), self.image.height()
+                    region = (crop.left() / width, crop.top() / height,
+                              crop.right() / width, crop.bottom() / height)
+                    self.regionSelected.emit(tuple(max(0.0, min(1.0, x)) for x in region))
 
     def mouseDoubleClickEvent(self, event):
-        self.doubleClicked.emit()
+        if not self.selecting_region:
+            self.doubleClicked.emit()
 
 
 class Timeline(QWidget):
     seekRequested = Signal(int)
+    zoneMoved = Signal(object)
+    zoneMenuRequested = Signal(object, object)
+    LEFT = 32
+    RIGHT = 12
+    DRAG_CURSORS = {'start': Qt.CursorShape.SizeHorCursor, 'end': Qt.CursorShape.SizeHorCursor,
+                    'move': Qt.CursorShape.SizeAllCursor}
 
     def __init__(self):
         super().__init__()
         self.duration = 0
         self.position = 0
         self.markers = Markers()
-        self.setMinimumHeight(56)
+        self.draft = None
+        self.drag = None
+        self.preview = None
+        self.hovered = None
+        self.editable = True
+        self.lane_icons = {kind: QIcon(str(RESOURCES / f'assets/icons/zone-{kind}.svg'))
+                           for kind in ZONE_LANES}
+        self.setMinimumHeight(88)
         self.setMouseTracking(True)
         self.setToolTip('Posizione video')
 
     def x_for(self, ms):
-        return 12 + round(max(0, min(ms, self.duration)) / max(1, self.duration) * (self.width() - 24))
+        return self.LEFT + round(max(0, min(ms, self.duration)) / max(1, self.duration) * self.track_width())
+
+    def track_width(self):
+        return max(1, self.width() - self.LEFT - self.RIGHT)
+
+    def default_span(self, start):
+        duration = 5000
+        if duration * self.track_width() < 24 * self.duration:
+            duration = max(1, round(self.duration * .05))
+        start = max(0, min(start, self.duration - 1))
+        return start, min(self.duration, start + duration)
+
+    def zone_rect(self, zone):
+        y, _ = ZONE_LANES[zone.kind]
+        x = self.x_for(zone.start)
+        return QRect(x, y, max(5, self.x_for(zone.end) - x), 14)
 
     def paintEvent(self, event):
         p = QPainter(self)
         p.setRenderHint(QPainter.RenderHint.Antialiasing)
         p.setPen(QPen(QColor('#45505b'), 4))
-        p.drawLine(12, 33, self.width() - 12, 33)
+        p.drawLine(self.LEFT, 33, self.width() - self.RIGHT, 33)
         p.setPen(QPen(QColor('#4bd6bd'), 4))
-        p.drawLine(12, 33, self.x_for(self.position), 33)
+        p.drawLine(self.LEFT, 33, self.x_for(self.position), 33)
         p.setFont(QFont('Segoe UI', 9, QFont.Weight.Bold))
         for marker, _ in self.markers.rows():
             x = self.x_for(marker.ms)
@@ -162,17 +266,121 @@ class Timeline(QWidget):
         p.setPen(Qt.PenStyle.NoPen)
         p.setBrush(QColor('#ffffff'))
         p.drawEllipse(self.x_for(self.position) - 6, 27, 12, 12)
+        for kind, (y, color) in ZONE_LANES.items():
+            self.lane_icons[kind].paint(p, QRect(7, y - 2, 18, 18))
+            p.fillRect(QRect(self.LEFT, y, self.track_width(), 14), QColor('#272d33'))
+        for zone in self.markers.zones:
+            shown = self.preview if self.preview and self.preview.id == zone.id else zone
+            if shown.start < self.duration:
+                self.paint_span(p, shown)
+        if self.draft:
+            self.paint_span(p, self.draft, draft=True)
+
+    def paint_span(self, painter, zone, *, draft=False):
+        rect = self.zone_rect(zone)
+        color = QColor(ZONE_LANES[zone.kind][1])
+        label = f'{zone.speed}%' if zone.kind == 'speed' else ''
+        painter.fillRect(rect, color)
+        painter.setPen(QColor('#111316'))
+        if rect.width() >= painter.fontMetrics().horizontalAdvance(label) + 6:
+            painter.drawText(rect, Qt.AlignmentFlag.AlignCenter, label)
+        if draft:
+            painter.setPen(QPen(QColor('#ffffff'), 1, Qt.PenStyle.DashLine))
+            painter.setBrush(Qt.BrushStyle.NoBrush)
+            painter.drawRect(rect.adjusted(0, 0, -1, -1))
+        elif self.hovered == zone.id and rect.width() >= 9:
+            edge = QColor('#123046')
+            painter.fillRect(rect.left() + 2, rect.top() + 3, 2, 8, edge)
+            painter.fillRect(rect.right() - 3, rect.top() + 3, 2, 8, edge)
+
+    def set_draft(self, zone):
+        self.draft = zone
+        self.update()
+
+    def hit_zone(self, position):
+        return next((zone for zone in reversed(self.markers.zones)
+                     if zone.start < self.duration and self.zone_rect(zone).contains(position)), None)
+
+    def drag_mode(self, zone, x):
+        rect = self.zone_rect(zone)
+        grip = min(7, max(1, rect.width() // 4))
+        if x < rect.left() + grip:
+            return 'start'
+        if x > rect.right() - grip:
+            return 'end'
+        return 'move'
+
+    def update_hover(self, position):
+        zone = self.hit_zone(position) if self.editable else None
+        if self.draft and self.zone_rect(self.draft).contains(position):
+            zone = self.draft
+        self.hovered = zone.id if zone else None
+        self.setCursor(self.DRAG_CURSORS[self.drag_mode(zone, position.x())] if zone
+                       else Qt.CursorShape.ArrowCursor)
+        self.update()
+
+    def leaveEvent(self, event):
+        if not self.drag:
+            self.hovered = None
+            self.unsetCursor()
+            self.update()
+        super().leaveEvent(event)
 
     def mousePressEvent(self, event):
         if event.button() == Qt.MouseButton.LeftButton and self.duration:
-            self.seek_at(event.position().x())
+            position = event.position().toPoint()
+            zone = self.hit_zone(position) if self.editable else None
+            x = position.x()
+            if zone:
+                neighbors = [other for other in self.markers.zones if other.kind == zone.kind]
+                left = max((other.end for other in neighbors if other.end <= zone.start), default=0)
+                right = min((other.start for other in neighbors if other.start >= zone.end),
+                            default=self.duration)
+                mode = self.drag_mode(zone, x)
+                self.drag = (zone, mode, self.time_at(x), left, right)
+                self.hovered = zone.id
+                self.setCursor(self.DRAG_CURSORS[mode])
+            else:
+                self.seekRequested.emit(self.time_at(x))
+
+    def dragged_zone(self, x):
+        zone, mode, origin, left, right = self.drag
+        delta = self.time_at(x) - origin
+        start, end = zone.start, zone.end
+        if mode == 'start':
+            start = max(left, min(end - 1, start + delta))
+        elif mode == 'end':
+            end = min(right, max(start + 1, end + delta))
+        else:
+            delta = max(left - start, min(right - end, delta))
+            start, end = start + delta, end + delta
+        return replace(zone, start=start, end=end)
 
     def mouseMoveEvent(self, event):
-        if event.buttons() & Qt.MouseButton.LeftButton and self.duration:
-            self.seek_at(event.position().x())
+        if self.drag:
+            self.preview = self.dragged_zone(event.position().x())
+            self.update()
+        elif event.buttons() & Qt.MouseButton.LeftButton and self.duration:
+            self.seekRequested.emit(self.time_at(event.position().x()))
+        else:
+            self.update_hover(event.position().toPoint())
 
-    def seek_at(self, x):
-        self.seekRequested.emit(round(max(0, min(1, (x - 12) / max(1, self.width() - 24))) * self.duration))
+    def mouseReleaseEvent(self, event):
+        if event.button() == Qt.MouseButton.LeftButton and self.drag:
+            changed = self.dragged_zone(event.position().x())
+            original = self.drag[0]
+            self.drag = self.preview = None
+            if changed != original:
+                self.zoneMoved.emit(changed)
+            self.update_hover(event.position().toPoint())
+
+    def contextMenuEvent(self, event):
+        zone = self.hit_zone(event.pos())
+        if zone:
+            self.zoneMenuRequested.emit(zone, event.globalPos())
+
+    def time_at(self, x):
+        return round(max(0, min(1, (x - self.LEFT) / self.track_width())) * self.duration)
 
 
 class PlayerWindow(QMainWindow):
@@ -205,6 +413,9 @@ class PlayerWindow(QMainWindow):
         self.reverse_origin = 0
         self.reverse_started = 0
         self.reverse_rate = 1.0
+        self.zoom_zone = None
+        self.zone_mode = None
+        self.zone_start = 0
         self.jog_position = None
         self.reverse_timer = QTimer(self)
         self.reverse_timer.setTimerType(Qt.TimerType.PreciseTimer)
@@ -236,6 +447,7 @@ class PlayerWindow(QMainWindow):
         self.player.mediaStatusChanged.connect(self.on_media_status)
         self.player.seekableChanged.connect(self.timeline.setEnabled)
         self.player.playbackRateChanged.connect(self.on_rate)
+        self.player.positionChanged.connect(self.on_position)
         QApplication.instance().installEventFilter(self)
 
     def tool(self, icon, tooltip, action, parent_layout):
@@ -314,9 +526,13 @@ class PlayerWindow(QMainWindow):
         self.surface = VideoSurface()
         self.surface.clicked.connect(self.toggle_play)
         self.surface.doubleClicked.connect(self.toggle_video_only)
+        self.surface.regionSelected.connect(self.region_selected)
         left_layout.addWidget(self.surface, 1)
         self.timeline = Timeline()
         self.timeline.seekRequested.connect(self.seek)
+        self.timeline.zoneMoved.connect(self.reposition_zone)
+        self.timeline.zoneMenuRequested.connect(self.zone_menu)
+        self.timeline.setEnabled(self.player.isSeekable())
         left_layout.addWidget(self.timeline)
         controls = QHBoxLayout()
         self.play_button = self.tool(QStyle.StandardPixmap.SP_MediaPlay, 'Riproduci avanti / pausa', self.toggle_forward, controls)
@@ -325,6 +541,15 @@ class PlayerWindow(QMainWindow):
         self.reverse_button = self.tool(self.reverse_icon, 'Riproduci indietro / pausa', self.toggle_reverse, controls)
         self.reverse_button.setCheckable(True)
         self.tool(QStyle.StandardPixmap.SP_MediaSkipBackward, 'Torna all\'inizio', lambda: self.seek(0), controls)
+        self.zone_buttons = {}
+        for kind, tooltip in (('zoom', 'zone_add_zoom'), ('speed', 'zone_add_speed')):
+            button = self.tool(QIcon(str(RESOURCES / f'assets/icons/zone-{kind}.svg')),
+                               tooltip, lambda checked, mode=kind: self.toggle_zone_tool(mode, checked),
+                               controls)
+            button.setCheckable(True)
+            button.setEnabled(False)
+            button.setAccessibleName(self.t(tooltip))
+            self.zone_buttons[kind] = button
         self.clock = QLabel('0.000 / 0.000 s')
         self.clock.setFont(QFont('Consolas', 10))
         self.clock.setMinimumWidth(145)
@@ -341,7 +566,7 @@ class PlayerWindow(QMainWindow):
         self.rate_combo.setCurrentIndex(RATES.index(100))
         self.rate_combo.setFixedWidth(86)
         self.rate_combo.setToolTip('Velocita di riproduzione')
-        self.rate_combo.currentIndexChanged.connect(lambda i: self.player.setPlaybackRate(RATES[i] / 100))
+        self.rate_combo.currentIndexChanged.connect(self.on_master_rate)
         controls.addWidget(self.rate_combo)
         faster = QToolButton()
         faster.setText('+')
@@ -446,6 +671,7 @@ class PlayerWindow(QMainWindow):
         if not self.video_path:
             self.filename.setText(self.t('Nessun file'))
         self.surface.empty_text = self.t('Nessun video aperto')
+        self.timeline.setToolTip(self.t('timeline_zone_help'))
         self.table.setHorizontalHeaderLabels([self.t(s).replace(' (s)', '\n(s)')
             for s in ['Flag', 'Descrizione', 'Tempo (s)', 'Intertempo (s)', 'Cumulato (s)']])
         for index in range(1, self.filter.count()):
@@ -456,6 +682,8 @@ class PlayerWindow(QMainWindow):
                 button.setToolTip(self.t('Aggiungi flag {flag}', flag=flag))
         for language, button in self.language_buttons.items():
             button.setChecked(language == self.translator.language)
+        for kind, button in self.zone_buttons.items():
+            button.setAccessibleName(self.t('zone_add_' + kind))
         self.refresh_markers()
         self.on_state(self.player.playbackState())
         self.surface.update()
@@ -493,10 +721,148 @@ class PlayerWindow(QMainWindow):
         self.session_dirty = True
         self.save_session()
 
+    def toggle_zone_tool(self, kind, checked):
+        if self.timeline.draft:
+            self.finish_zone()
+        self.start_zone(kind if checked else None)
+
+    def start_zone(self, kind):
+        self.zone_mode = kind
+        self.surface.select_region(kind == 'zoom')
+        self.timeline.set_draft(None)
+        for mode, button in self.zone_buttons.items():
+            button.setChecked(mode == kind)
+        if kind:
+            self.pause_playback()
+            self.flush_jog()
+            self.jog_position = None
+            self.zone_start = self.seek_target if self.seek_pending else self.surface.ms
+            if kind == 'speed':
+                self.prepare_zone()
+            else:
+                self.statusBar().showMessage(self.t('zone_select_region'))
+        else:
+            self.on_state(self.player.playbackState())
+
+    def region_selected(self, region):
+        self.surface.select_region(False)
+        self.prepare_zone(region)
+
+    def prepare_zone(self, region=None):
+        start, end = self.timeline.default_span(self.zone_start)
+        next_start = min((zone.start for zone in self.markers.zones
+                          if zone.kind == self.zone_mode and zone.start > start), default=end)
+        self.timeline.set_draft(PlaybackZone(self.zone_mode, start, min(end, next_start), region))
+        self.statusBar().showMessage(self.t('zone_confirm_hint'))
+
+    def finish_zone(self, flag=None):
+        zone = self.timeline.draft
+        if zone is None:
+            return
+        if flag is not None:
+            points = [marker for marker, _ in self.markers.rows() if marker.flag == flag]
+            if len(points) != 2 or not 0 <= points[0].ms < points[1].ms <= self.timeline.duration:
+                return
+            zone = replace(zone, start=points[0].ms, end=points[1].ms,
+                           start_marker=points[0].id, end_marker=points[1].id)
+        try:
+            self.markers.set_zone(zone)
+        except ValueError as error:
+            if flag is None:
+                self.start_zone(None)
+            self.statusBar().showMessage(self.t(str(error)), 4000)
+        else:
+            self.start_zone(None)
+            self.zones_changed()
+
+    def reposition_zone(self, zone):
+        if not self.save_allowed:
+            return
+        if self.reverse_active:
+            self.reverse_origin = self.reverse_position()
+            self.reverse_started = time.monotonic()
+        try:
+            self.markers.set_zone(zone)
+        except ValueError as error:
+            self.statusBar().showMessage(self.t(str(error)), 4000)
+        else:
+            self.zones_changed()
+
+    def edit_zone(self, zone):
+        self.pause_playback()
+        dialog = QDialog(self)
+        dialog.setWindowTitle(self.t('zone_add_' + zone.kind))
+        layout = QFormLayout(dialog)
+
+        def time_field(label, ms, maximum):
+            spin = QDoubleSpinBox()
+            spin.setDecimals(3)
+            spin.setRange(0, maximum / 1000)
+            spin.setSingleStep(0.1)
+            spin.setSuffix(' s')
+            spin.setValue(ms / 1000)
+            layout.addRow(self.t(label), spin)
+            return spin
+
+        start = time_field('zone_start', zone.start, self.timeline.duration)
+        end = time_field('zone_end', zone.end, self.timeline.duration)
+        if zone.kind == 'zoom':
+            enter = time_field('zone_enter', zone.enter_ms, 60_000)
+            leave = time_field('zone_exit', zone.exit_ms, 60_000)
+        else:
+            speed = QSpinBox()
+            speed.setRange(1, 1000)
+            speed.setSuffix('%')
+            speed.setValue(zone.speed)
+            layout.addRow(self.t('zone_factor'), speed)
+        buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
+        layout.addRow(buttons)
+
+        def apply_zone():
+            changes = ({'enter_ms': round(enter.value() * 1000), 'exit_ms': round(leave.value() * 1000)}
+                       if zone.kind == 'zoom' else {'speed': speed.value()})
+            try:
+                self.markers.set_zone(replace(zone, start=round(start.value() * 1000),
+                                             end=round(end.value() * 1000), **changes))
+            except ValueError as error:
+                QMessageBox.warning(dialog, dialog.windowTitle(), self.t(str(error)))
+                return
+            self.zones_changed()
+            dialog.accept()
+
+        buttons.accepted.connect(apply_zone)
+        buttons.rejected.connect(dialog.reject)
+        return dialog.exec() == QDialog.DialogCode.Accepted
+
+    def zone_menu(self, zone, point):
+        menu = QMenu(self)
+        edit = menu.addAction(self.t('zone_edit'))
+        delete = menu.addAction(self.t('zone_delete'))
+        edit.setEnabled(self.save_allowed)
+        delete.setEnabled(self.save_allowed)
+        chosen = menu.exec(point)
+        if chosen == edit:
+            self.start_zone(None)
+            self.edit_zone(zone)
+        elif chosen == delete:
+            if self.reverse_active:
+                self.reverse_origin = self.reverse_position()
+                self.reverse_started = time.monotonic()
+            self.markers.zones = [item for item in self.markers.zones if item.id != zone.id]
+            self.zones_changed()
+
+    def zones_changed(self):
+        self.timeline.update()
+        self.update_effects(self.surface.ms)
+        self.session_dirty = True
+        self.save_session()
+
     def clear_markers(self):
         if not self.video_path or not self.confirm('Cancella tutti i punti del video', 'confirm_clear'):
             return
-        replacement = Markers(rotation=self.markers.rotation, descriptions=self.markers.descriptions)
+        replacement = Markers(rotation=self.markers.rotation, descriptions=self.markers.descriptions,
+                              zones=(replace(zone, start_marker=None, end_marker=None)
+                                     for zone in self.markers.zones))
         try:
             self.store.save(self.video_path, replacement)
         except OSError as exc:
@@ -519,6 +885,7 @@ class PlayerWindow(QMainWindow):
             return
         self.markers = Markers()
         self.surface.rotation = 0
+        self.update_effects(self.surface.ms)
         self.surface.clear_flash()
         self.save_allowed = True
         self.session_dirty = False
@@ -622,6 +989,7 @@ class PlayerWindow(QMainWindow):
         if not self.save_session():
             return
         self.pause_playback()
+        self.start_zone(None)
         self.direction = 1
         self.jog_position = None
         self.jog_timer.stop()
@@ -643,6 +1011,8 @@ class PlayerWindow(QMainWindow):
         self.surface.native_mirrored = False
         self.surface.image = QImage()
         self.surface.ms = 0
+        self.zoom_zone = None
+        self.surface.set_zoom(FULL_FRAME)
         self.surface.clear_flash()
         self.previous_ms = -1
         self.seek_pending = False
@@ -652,6 +1022,7 @@ class PlayerWindow(QMainWindow):
         self.refresh_markers()
         self.save_label.setText(self.t('Salvataggio automatico attivo') if self.save_allowed else self.t('Sessione non leggibile: usa Esporta CSV'))
         self.player.setSource(QUrl.fromLocalFile(str(path)))
+        self.update_effects(0)
         self.player.play()
 
     def on_frame(self, frame):
@@ -663,6 +1034,10 @@ class PlayerWindow(QMainWindow):
             self.present_frame()
 
     def present_frame(self):
+        if self.surface.zoom_until:
+            if time.monotonic() >= self.surface.zoom_until:
+                self.surface.zoom_until = 0
+            self.surface.update()
         frame = self.pending_frame
         self.pending_frame = None
         if frame is None or not frame.isValid():
@@ -692,6 +1067,10 @@ class PlayerWindow(QMainWindow):
         self.surface.native_mirrored = frame.mirrored()
         self.previous_ms = ms
         self.surface.ms = ms
+        for kind, button in self.zone_buttons.items():
+            button.setEnabled(self.save_allowed and self.player.isSeekable() and self.timeline.duration > 0)
+        if self.player.playbackState() != QMediaPlayer.PlaybackState.PlayingState and not self.reverse_active:
+            self.update_effects(ms)
         self.timeline.position = ms
         self.clock.setText(f'{seconds(ms)} / {seconds(self.player.duration())} s')
         self.timeline.update()
@@ -701,6 +1080,10 @@ class PlayerWindow(QMainWindow):
         self.timeline.duration = duration
         self.timeline.update()
         self.clock.setText(f'{seconds(self.surface.ms)} / {seconds(duration)} s')
+        if not duration:
+            self.timeline.drag = self.timeline.preview = None
+            for button in self.zone_buttons.values():
+                button.setEnabled(False)
 
     def on_state(self, state):
         if state != QMediaPlayer.PlaybackState.PlayingState:
@@ -720,13 +1103,19 @@ class PlayerWindow(QMainWindow):
 
     def on_media_status(self, status):
         if status == QMediaPlayer.MediaStatus.EndOfMedia:
+            self.update_effects(self.timeline.duration, animate=True)
             self.statusBar().showMessage(self.t('Fine video'))
         elif status == QMediaPlayer.MediaStatus.LoadedMedia:
-            self.player.setPlaybackRate(RATES[self.rate_combo.currentIndex()] / 100)
+            self.update_effects(self.player.position())
 
     def toggle_play(self):
         if not self.video_path:
             return
+        if self.zone_mode:
+            if self.timeline.draft:
+                self.finish_zone()
+            else:
+                self.start_zone(None)
         if self.reverse_active or self.player.playbackState() == QMediaPlayer.PlaybackState.PlayingState:
             self.pause_playback()
         elif self.direction == -1:
@@ -761,6 +1150,7 @@ class PlayerWindow(QMainWindow):
             self.on_state(self.player.playbackState())
             return
         self.pause_playback()
+        self.start_zone(None)
         self.flush_jog()
         self.jog_position = None
         self.direction = -1
@@ -769,21 +1159,25 @@ class PlayerWindow(QMainWindow):
             self.reverse_origin = max(0, self.player.duration() - 1)
             self.seek(self.reverse_origin)
         self.reverse_started = time.monotonic()
-        self.reverse_rate = self.player.playbackRate()
+        self.reverse_rate = self.master_rate()
         self.reverse_active = True
+        self.update_effects(self.reverse_origin)
         self.reverse_timer.start()
         self.on_state(self.player.playbackState())
 
     def reverse_position(self):
-        return max(0, self.reverse_origin - (time.monotonic() - self.reverse_started) * 1000 * self.reverse_rate)
+        return self.markers.reverse_position(self.reverse_origin,
+                                             (time.monotonic() - self.reverse_started) * 1000,
+                                             self.reverse_rate)
 
     def reverse_tick(self):
         if not self.reverse_active:
             return
+        target = round(self.reverse_position())
+        self.update_effects(target, animate=True)
         # Serialize decoder seeks. Wall time, not decoder throughput, sets media speed.
         if self.seek_pending and time.monotonic() - self.seek_started < 1:
             return
-        target = round(self.reverse_position())
         self.seek(target, playback=True)
         if target == 0:
             self.pause_playback()
@@ -796,7 +1190,7 @@ class PlayerWindow(QMainWindow):
             self.jog_position = float(self.seek_target if self.seek_pending else self.surface.ms)
         # One notch = 100 media milliseconds at 100%; retain fractional wheel motion.
         self.jog_position = max(0, min(self.player.duration() - 1,
-            self.jog_position + steps * 100 * self.player.playbackRate()))
+            self.jog_position + steps * 100 * self.master_rate()))
         if not self.jog_timer.isActive():
             self.jog_timer.start()
 
@@ -818,6 +1212,8 @@ class PlayerWindow(QMainWindow):
         if self.reverse_active and not playback:
             self.reverse_origin = self.seek_target
             self.reverse_started = time.monotonic()
+        if not playback:
+            self.update_effects(self.seek_target)
         if not self.seek_pending and (self.seek_target == self.surface.ms or self.seek_target == self.player.position()):
             return
         self.seek_started = time.monotonic()
@@ -829,15 +1225,51 @@ class PlayerWindow(QMainWindow):
         index = max(0, min(len(RATES) - 1, self.rate_combo.currentIndex() + direction))
         self.rate_combo.setCurrentIndex(index)
 
-    def on_rate(self, rate):
+    def master_rate(self):
+        return RATES[self.rate_combo.currentIndex()] / 100
+
+    def on_master_rate(self):
         if self.reverse_active:
             self.reverse_origin = self.reverse_position()
             self.reverse_started = time.monotonic()
-        self.reverse_rate = rate
-        self.surface.rate = round(rate * 100)
+        self.reverse_rate = self.master_rate()
+        position = self.reverse_origin if self.reverse_active else self.seek_target if self.seek_pending else self.player.position()
+        self.update_rate(position)
+
+    def on_position(self, position):
+        if not self.reverse_active and not self.seek_pending:
+            playing = self.player.playbackState() == QMediaPlayer.PlaybackState.PlayingState
+            self.update_effects(position, animate=playing)
+
+    def update_rate(self, position):
+        speed = self.markers.zone_at('speed', position, self.reverse_active)
+        rate = self.master_rate() * (speed.speed / 100 if speed else 1)
+        if abs(self.player.playbackRate() - rate) > 1e-9:
+            self.player.setPlaybackRate(rate)
+
+    def update_effects(self, position, animate=False):
+        zoom = self.markers.zone_at('zoom', position, self.reverse_active)
+        if zoom != self.zoom_zone:
+            if animate and zoom:
+                duration = zoom.enter_ms
+            elif animate and self.zoom_zone:
+                duration = self.zoom_zone.exit_ms
+            else:
+                duration = 0
+            self.surface.set_zoom(zoom.region if zoom else FULL_FRAME, duration)
+            self.zoom_zone = zoom
+        elif not animate and self.surface.zoom_until:
+            self.surface.set_zoom(zoom.region if zoom else FULL_FRAME)
+        self.update_rate(position)
+
+    def on_rate(self, rate):
+        self.surface.rate = round(rate * 100, 2)
         self.surface.update()
 
     def add_marker(self, flag):
+        if self.zone_mode:
+            self.finish_zone(flag)
+            return
         if (not self.video_path or self.surface.image.isNull() or self.jog_timer.isActive()
                 or (self.seek_pending and not self.seek_reverse)):
             return
@@ -865,6 +1297,7 @@ class PlayerWindow(QMainWindow):
         self.table.resizeRowsToContents()
         self.count_label.setText(self.t('Flag  |  {count}', count=len(self.markers.items)))
         self.timeline.markers = self.markers
+        self.timeline.editable = self.save_allowed
         self.timeline.update()
 
     def marker_clicked(self, row, column):
@@ -881,11 +1314,15 @@ class PlayerWindow(QMainWindow):
         marker_id = item.data(Qt.ItemDataRole.UserRole)
         menu = QMenu(self)
         describe = menu.addAction(self.t('Modifica descrizione tag'))
+        adjust = menu.addAction(self.t('marker_edit_time'))
+        adjust.setEnabled(self.save_allowed and self.timeline.duration > 0)
         remove = menu.addAction(self.style().standardIcon(QStyle.StandardPixmap.SP_TrashIcon), self.t('Elimina punto'))
         selected = menu.exec(self.table.viewport().mapToGlobal(point))
         if selected == describe:
             marker = next(m for m in self.markers.items if m.id == marker_id)
             self.edit_description(marker.flag)
+        elif selected == adjust:
+            self.edit_marker_time(marker_id)
         elif selected == remove:
             self.delete_marker(marker_id)
 
@@ -900,11 +1337,24 @@ class PlayerWindow(QMainWindow):
             self.refresh_markers()
             self.save_session()
 
+    def edit_marker_time(self, marker_id):
+        self.pause_playback()
+        marker = next(item for item in self.markers.items if item.id == marker_id)
+        value, accepted = QInputDialog.getDouble(self, self.t('marker_edit_time'), self.t('Tempo (s)'),
+            marker.ms / 1000, 0, self.timeline.duration / 1000, 3)
+        if accepted:
+            try:
+                self.markers.move_marker(marker_id, round(value * 1000), self.timeline.duration)
+            except ValueError as error:
+                QMessageBox.warning(self, self.t('marker_edit_time'), self.t(str(error)))
+                return
+            self.refresh_markers()
+            self.zones_changed()
+
     def delete_marker(self, marker_id):
         self.markers.remove(marker_id)
-        self.session_dirty = True
         self.refresh_markers()
-        self.save_session()
+        self.zones_changed()
 
     def save_session(self):
         if not self.video_path or not self.save_allowed or not self.session_dirty:
@@ -941,6 +1391,7 @@ class PlayerWindow(QMainWindow):
         self.sidebar.setVisible(not self.sidebar.isVisible())
 
     def toggle_video_only(self):
+        self.start_zone(None)
         if self.video_only:
             self.takeCentralWidget()
             self.setCentralWidget(self.normal_central)
@@ -973,6 +1424,12 @@ class PlayerWindow(QMainWindow):
             self.showFullScreen()
 
     def eventFilter(self, obj, event):
+        if (event.type() == QEvent.Type.MouseButtonPress and self.timeline.draft is not None
+                and isinstance(obj, QWidget) and (obj is self or self.isAncestorOf(obj))
+                and obj not in self.zone_buttons.values()
+                and not (event.button() == Qt.MouseButton.LeftButton
+                         and obj.property('marker_flag') is not None)):
+            self.finish_zone()
         if event.type() == QEvent.Type.Wheel and obj in (self.surface, self.timeline, self.table.viewport()):
             if not QApplication.activeModalWidget() and not QApplication.activePopupWidget():
                 steps = event.pixelDelta().y() / 40 if not event.pixelDelta().isNull() else event.angleDelta().y() / 120
@@ -1017,6 +1474,8 @@ class PlayerWindow(QMainWindow):
             self.toggle_video_only()
         elif key == Qt.Key.Key_F11:
             self.toggle_fullscreen()
+        elif key == Qt.Key.Key_Escape and self.zone_mode:
+            self.start_zone(None)
         elif key == Qt.Key.Key_Escape and self.isFullScreen():
             self.toggle_fullscreen()
         return True
@@ -1037,6 +1496,8 @@ class PlayerWindow(QMainWindow):
             event.ignore()
             return
         self._closing_download = False
+        if self.timeline.draft:
+            self.finish_zone()
         if self.video_only:
             self.toggle_video_only()
         if not self.save_session():

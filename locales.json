@@ -276,12 +276,12 @@
     "en": "Reset database"
   },
   "confirm_clear": {
-    "it": "Cancellare tutti i punti del video attivo? L'operazione non puo essere annullata. La rotazione del video viene conservata.",
-    "en": "Delete all markers for the current video? This cannot be undone. Video rotation will be preserved."
+    "it": "Cancellare tutti i punti del video attivo? L’operazione non può essere annullata. Rotazione, descrizioni e zone di riproduzione vengono conservate.",
+    "en": "Delete all markers for the current video? This cannot be undone. Rotation, descriptions and playback areas will be preserved."
   },
   "confirm_reset": {
-    "it": "Cancellare punti e rotazioni salvati per TUTTI i video? L'operazione non puo essere annullata. La lingua scelta e i file video originali vengono conservati.",
-    "en": "Delete saved markers and rotations for ALL videos? This cannot be undone. Your language setting and original video files will be preserved."
+    "it": "Cancellare le sessioni per TUTTI i video, comprese flag, descrizioni, rotazioni e zone di riproduzione? L’operazione non può essere annullata. La lingua scelta e i file video originali vengono conservati.",
+    "en": "Delete sessions for ALL videos, including markers, descriptions, rotations and playback areas? This cannot be undone. Your language setting and original video files will be preserved."
   },
   "Conferma": {
     "it": "Conferma",
@@ -358,5 +358,65 @@
   "Preferenze non salvate": {
     "it": "Preferenze non salvate",
     "en": "Could not save preferences"
+  },
+  "zone_add_zoom": {
+    "it": "Zona zoom",
+    "en": "Zoom area"
+  },
+  "zone_add_speed": {
+    "it": "Zona di velocità",
+    "en": "Speed area"
+  },
+  "zone_select_region": {
+    "it": "Trascina sul video per selezionare la zona da ingrandire. Esc annulla.",
+    "en": "Drag on the video to select an area to zoom. Esc cancels."
+  },
+  "zone_confirm_hint": {
+    "it": "Scegli un numero con due punti oppure fai clic altrove per accettare l’intervallo proposto. Esc annulla.",
+    "en": "Choose a number with two markers, or click elsewhere to accept the proposed interval. Esc cancels."
+  },
+  "timeline_zone_help": {
+    "it": "Rettangolo blu: zoom. Orologio viola: velocità. Trascina i bordi di un blocco per ridimensionarlo o il centro per spostarlo.",
+    "en": "Blue rectangle: zoom. Purple clock: speed. Drag a block’s edges to resize it or the center to move it."
+  },
+  "marker_edit_time": {
+    "it": "Modifica tempo del punto…",
+    "en": "Edit marker time…"
+  },
+  "zone_edit": {
+    "it": "Modifica intervallo e impostazioni…",
+    "en": "Edit interval and settings…"
+  },
+  "zone_delete": {
+    "it": "Elimina zona",
+    "en": "Delete area"
+  },
+  "zone_start": {
+    "it": "Inizio",
+    "en": "Start"
+  },
+  "zone_end": {
+    "it": "Fine",
+    "en": "End"
+  },
+  "zone_enter": {
+    "it": "Ingresso zoom (tempo reale)",
+    "en": "Zoom in (real time)"
+  },
+  "zone_exit": {
+    "it": "Uscita zoom (tempo reale)",
+    "en": "Zoom out (real time)"
+  },
+  "zone_factor": {
+    "it": "Percentuale della velocità globale",
+    "en": "Percentage of master speed"
+  },
+  "zone_invalid": {
+    "it": "Intervallo o impostazioni della zona non validi. La fine deve seguire l’inizio.",
+    "en": "Invalid area interval or settings. End must be after start."
+  },
+  "zone_overlap": {
+    "it": "Due zone dello stesso tipo non possono sovrapporsi.",
+    "en": "Two areas of the same type cannot overlap."
   }
 }

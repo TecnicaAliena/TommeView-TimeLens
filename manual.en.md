@@ -1,4 +1,4 @@
-# TommeView 1.6.5 user manual
+# TommeView 1.6.6 user manual
 
 [Overview](README.md) · [Italian manual](manuale.it.md) · [Installation](INSTALLATION.md)
 
@@ -24,14 +24,14 @@ manual event selection; this is not certified metrology.
 | Ctrl + wheel | Change speed by one step |
 | + / − | Increase / decrease speed |
 | Percentage selector | Select playback speed |
-| 0–9 / numeric keypad / tag button | Mark the displayed frame |
-| Timeline click / drag | Seek |
+| 0–9 / numeric keypad / tag button | Mark the displayed frame or choose bounds for a draft area |
+| Timeline click / drag | Seek on the main track; move or resize a block in an area lane |
 | Click table row | Jump to that marker |
 | Right-click tag button | Edit its description |
-| Right-click row | Edit description or delete that occurrence |
+| Right-click row | Edit description or time, or delete that occurrence |
 | F10 / double-click video | Video-only fullscreen |
 | F11 | Fullscreen with controls |
-| Escape | Exit fullscreen |
+| Escape | Cancel an area draft or exit fullscreen |
 | Curved arrow buttons | Rotate by 90° |
 | Volume slider / speaker | Volume / mute |
 | Tag filter | Show one label or all labels |
@@ -58,6 +58,24 @@ on codec and hardware. It stops at the beginning; starting reverse there starts
 from the end. Space remembers the last direction. Crossing a marker flashes its
 number for about half a second; timeline seeking does not flash skipped markers.
 
+## Zoom and speed areas
+
+- **Rectangle, blue lane.** Draw a crop on the video. Zoom-in and zoom-out
+  default to 0.2 seconds of real time each, independent of playback speed.
+- **Clock, purple lane.** Applies a percentage of master speed. The initial
+  factor is 10%, so a master speed of 50% gives 5% inside the area. Set a
+  factor above 100% to speed up.
+- The draft starts at the playhead and lasts 5 seconds, or 5% of the video
+  if 5 seconds would occupy less than 24 timeline pixels. Click elsewhere
+  to accept it. Press or click a number with exactly two markers to link
+  its bounds to those markers instead. Escape cancels the draft.
+- Drag the center to move a block, or an edge to resize it. Right-click
+  a block to edit its settings or delete it. Zoom and speed areas can overlap.
+- Added markers with the same number leave existing area links intact.
+  Choose **Edit marker time…** in the table to move a linked edge. Manual
+  block edits preserve the offset from the linked marker. Deleting the
+  marker leaves the edge in place and removes its link.
+
 ## Table and CSV
 
 Rows are sorted by timestamp. **Interval** is the time since the preceding marker
@@ -73,14 +91,16 @@ Cumulative (ms)**. All labels are exported, regardless of the active filter.
 
 Sessions save automatically under `%LOCALAPPDATA%\TommeView\sessions`, keyed by
 absolute video path. Moving or renaming the video selects a different session.
-Format v3 stores markers, descriptions and rotation; v1/v2 remain readable.
+Format v4 adds areas and marker links. Sessions without areas use v3.
+TommeView reads formats v1 through v4.
 Rotation never modifies the original video.
 
 **About > Open annotation folder** opens files to back up. **Import markers**
 imports older `data` or `sessions` folders without overwriting existing sessions.
 Updates and uninstall preserve annotations.
 
-Trash clears the current video's points while retaining descriptions and rotation.
+Trash clears the current video's points while retaining descriptions, rotation
+and area bounds. Clearing the points removes their links to the areas.
 Global reset clears all sessions, descriptions and rotations, preserves videos and
 preferences, and prevents automatic restoration from old portable session copies.
 

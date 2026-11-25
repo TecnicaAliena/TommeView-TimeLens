@@ -1,6 +1,6 @@
 #define AppName "TommeView"
 #define LegacyFFmpeg "_internal\tools\download\ffmpeg\ffmpeg-n8.1.2-51-g7ba069f4f1-win64-lgpl-8.1"
-#define AppVersion "1.6.5"
+#define AppVersion "1.6.6"
 #define AppAuthor "Marco Tommesani"
 #ifdef ValidationBuild
 #define ShellProgId "TommeView.Validation.Video"
@@ -42,7 +42,7 @@ SolidCompression=yes
 UninstallDisplayIcon={app}\TommeView.exe
 VersionInfoCompany={#AppAuthor}
 VersionInfoDescription=TommeView Setup
-VersionInfoVersion=1.6.5.0
+VersionInfoVersion=1.6.6.0
 SetupIconFile=..\assets\tommeview.ico
 CloseApplications=yes
 RestartApplications=no

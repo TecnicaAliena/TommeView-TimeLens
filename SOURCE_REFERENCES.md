@@ -1,10 +1,10 @@
-# Dependency sources — TommeView 1.6.4 and 1.6.5
+# Dependency sources — TommeView 1.6.4 through 1.6.6
 
 TommeView's original application source is published in this repository under
 GPL-3.0-or-later. This page concerns only the third-party software distributed
 with the Windows package.
 
-The TommeView 1.6.5 installer uses the same pinned third-party binaries as 1.6.4.
+TommeView 1.6.5 and 1.6.6 use the same pinned third-party tools as 1.6.4.
 The startup updater fetches newer stable yt-dlp versions from the official
 [yt-dlp releases with source links](https://github.com/yt-dlp/yt-dlp/releases).
 

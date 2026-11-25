@@ -29,6 +29,7 @@ and frame rate before interpreting them as real machine timings.
 - Open local videos or drag them onto the window.
 - Play forward or backward at 5%–1000%; jog with the wheel while paused.
 - Create ten colored numeric tags with per-video multiline descriptions.
+- Add zoom, slowdown and speed-up areas on the timeline. Link areas to numeric tags with exactly two markers.
 - Inspect same-tag intervals and cumulative times; filter and export CSV.
 - Automatically save annotations locally and import older sessions.
 - Rotate the video and use video-only or full-interface fullscreen.
@@ -37,7 +38,7 @@ and frame rate before interpreting them as real machine timings.
 
 ## Availability
 
-Download **TommeView 1.6.5** from the [releases](https://github.com/TecnicaAliena/TommeView-TimeLens/releases) page. Third-party dependency source assets are separate from the installer; see [references](SOURCE_REFERENCES.md) and [delivery instructions](SOURCE_DELIVERY.md). Python and VLC are not required. Installation is per user; Explorer integration is optional.
+Download **TommeView 1.6.6** from the [releases](https://github.com/TecnicaAliena/TommeView-TimeLens/releases) page. Third-party dependency source assets are separate from the installer; see [references](SOURCE_REFERENCES.md) and [delivery instructions](SOURCE_DELIVERY.md). Python and VLC are not required. Installation is per user; Explorer integration is optional.
 
 TommeView checks for and caches verified stable yt-dlp updates in the background at startup.
 

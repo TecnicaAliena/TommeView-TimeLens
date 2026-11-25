@@ -1,7 +1,73 @@
 import csv
 import json
 import pytest
-from model import Markers, SessionStore, export_csv, seconds
+from dataclasses import replace
+from model import Markers, PlaybackZone, SessionStore, export_csv, seconds
+
+
+def test_zones_round_trip_edit_validation_and_legacy_session(tmp_path):
+    store = SessionStore(tmp_path)
+    video = tmp_path / 'video.mp4'
+    markers = Markers(descriptions={'1': 'clamp'})
+    store.save(video, markers)
+    assert store.load(video).zones == []
+    zoom = PlaybackZone('zoom', 100, 500, (.2, .1, .6, .8), enter_ms=275, exit_ms=50)
+    slower = PlaybackZone('speed', 300, 700, speed=20)
+    markers.set_zone(zoom)
+    markers.set_zone(slower)
+    with pytest.raises(ValueError, match='zone_overlap'):
+        markers.set_zone(PlaybackZone('speed', 600, 800))
+    with pytest.raises(ValueError, match='zone_invalid'):
+        markers.set_zone(PlaybackZone('zoom', 900, 1000, (.9, .1, .2, .8)))
+    resized = PlaybackZone('speed', 310, 710, id=slower.id)
+    markers.set_zone(resized)
+    store.save(video, markers)
+    loaded = store.load(video)
+    assert loaded.zones == [zoom, resized]
+    assert loaded.descriptions == markers.descriptions
+    assert loaded.zone_at('zoom', 400) == zoom
+    assert loaded.zone_at('speed', 400) == resized
+    assert loaded.zone_at('speed', 710) is None
+    assert loaded.zone_at('speed', 710, reverse=True) == resized
+
+
+def test_reverse_playback_spends_wall_time_inside_each_speed_area():
+    markers = Markers(zones=[PlaybackZone('speed', 1000, 1500, speed=50),
+                             PlaybackZone('speed', 2000, 3000, speed=10)])
+    assert markers.reverse_position(3100, 200, .5) == pytest.approx(3000)
+    assert markers.reverse_position(3100, 1200, .5) == pytest.approx(2950)
+    assert markers.reverse_position(1550, 700, 1) == pytest.approx(1175)
+    assert markers.reverse_position(1550, 2100, 1) == 0
+    faster = Markers(zones=[PlaybackZone('speed', 1000, 2000, speed=200)])
+    assert faster.reverse_position(2200, 350, 1) == pytest.approx(1700)
+
+
+def test_linked_bounds_follow_original_markers_and_preserve_manual_offsets(tmp_path):
+    markers = Markers()
+    start = markers.add(5, 1000)
+    end = markers.add(5, 3000)
+    speed = PlaybackZone('speed', 1000, 3000, speed=200, start_marker=start.id, end_marker=end.id)
+    zoom = PlaybackZone('zoom', 1100, 3100, (.2, .2, .8, .8),
+                        start_marker=start.id, end_marker=end.id)
+    fixed = PlaybackZone('speed', 4000, 5000)
+    for zone in (speed, zoom, fixed):
+        markers.set_zone(zone)
+    third = markers.add(5, 2000)
+    markers.move_marker(third.id, 3500, 6000)
+    assert markers.zones == [speed, zoom, fixed]
+    store = SessionStore(tmp_path)
+    video = tmp_path / 'video.mp4'
+    store.save(video, markers)
+    loaded = store.load(video)
+    with pytest.raises(ValueError, match='zone_overlap'):
+        loaded.move_marker(end.id, 4500, 6000)
+    assert loaded.items == sorted(markers.items, key=lambda item: item.ms)
+    assert loaded.zones == markers.zones
+    loaded.move_marker(start.id, 1500, 6000)
+    assert loaded.zones == [replace(speed, start=1500), replace(zoom, start=1600), fixed]
+    loaded.remove(end.id)
+    assert [(zone.end, zone.end_marker) for zone in loaded.zones] == [
+        (3000, None), (3100, None), (5000, None)]
 
 
 def test_intervals_sorted_per_flag_and_recomputed_after_delete():

@@ -29,6 +29,7 @@ Gli intervalli si riferiscono alla timeline del filmato. Per interpretarli come 
 - Aprire video locali, anche trascinandoli nella finestra.
 - Riprodurre avanti e indietro, rallentare o accelerare dal 5% al 1000% e usare la rotella per il jog in pausa.
 - Aggiungere dieci tag numeriche colorate, con descrizioni multilinea specifiche del video.
+- Definire zone di zoom, rallentamento e accelerazione sulla timeline, collegabili a tag con esattamente due punti.
 - Consultare tempi, intertempi e cumulati tra eventi della stessa tag; filtrare la tabella ed esportare in CSV.
 - Ritrovare le annotazioni grazie al salvataggio automatico locale.
 - Ruotare il video e passare allo schermo intero, con o senza l'interfaccia.
@@ -47,13 +48,13 @@ Gli intervalli si riferiscono alla timeline del filmato. Per interpretarli come 
 | F10 / doppio clic sul video | Schermo intero solo video |
 | F11 | Schermo intero con interfaccia |
 | Esc | Esci dallo schermo intero |
-| Tasto destro su una tag o una riga | Modifica la descrizione della tag |
+| Tasto destro su una tag o una riga | Modifica la descrizione della tag. Dalla riga puoi anche modificare il tempo del punto |
 
 ## Installazione Windows
 
 Il programma dispone di un installer per utente, senza necessità di installare Python o VLC. L'integrazione con **Apri con**, il menu contestuale e le associazioni dei file è configurabile durante l'installazione.
 
-Scarica **TommeView 1.6.5** dalla pagina delle [release](https://github.com/TecnicaAliena/TommeView-TimeLens/releases). Gli asset sorgente delle dipendenze sono pubblicati separatamente dalla procedura di installazione: consulta [riferimenti](SOURCE_REFERENCES.md) e [istruzioni di consegna](SOURCE_DELIVERY.md).
+Scarica **TommeView 1.6.6** dalla pagina delle [release](https://github.com/TecnicaAliena/TommeView-TimeLens/releases). Gli asset sorgente delle dipendenze sono pubblicati separatamente dalla procedura di installazione: consulta [riferimenti](SOURCE_REFERENCES.md) e [istruzioni di consegna](SOURCE_DELIVERY.md).
 
 All'avvio TommeView controlla in background gli aggiornamenti stabili di yt-dlp, li verifica e li salva nella cache utente.
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.6.6
+
+- Add per-video zoom and speed areas with labeled timeline lanes ([#4](https://github.com/TecnicaAliena/TommeView-TimeLens/issues/4)). Start from the playhead with a five-second proposal, or link both boundaries to a numeric tag with exactly two markers. Drag an area's center to move it or either edge to resize it.
+- Edit marker times from the table to move linked area boundaries. Additional points with the same label leave existing links intact.
+- Add context-menu editing and deletion, with independent real-time zoom transitions defaulting to 0.2 seconds each.
+- Save playback areas with the session while retaining v1–v3 session import and the existing marker CSV format.
+
 ## 1.6.5
 
 - Check the official stable yt-dlp release at startup in the background. Verify its SHA-256 and save newer builds in a per-user cache.

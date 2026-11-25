@@ -1,4 +1,4 @@
-# Manuale TommeView 1.6.5
+# Manuale TommeView 1.6.6
 
 [Presentazione italiana](README.it.md) · [English overview](README.md) · [English manual](manual.en.md) · [Installation (English)](INSTALLATION.md)
 
@@ -25,14 +25,14 @@ dipende dai fotogrammi disponibili e dalla scelta manuale degli eventi.
 | Ctrl + rotella | Cambia la velocità di uno scatto |
 | + / − | Aumenta / diminuisci la velocità |
 | Selettore percentuale | Seleziona direttamente la velocità |
-| 0–9 / tastierino / pulsante tag | Inserisce la tag sul fotogramma mostrato |
-| Clic / trascinamento timeline | Cerca una posizione nel video |
+| 0–9 / tastierino / pulsante tag | Inserisce la tag sul fotogramma o sceglie i limiti di una zona in bozza |
+| Clic / trascinamento timeline | Cerca un fotogramma nella corsia principale; sposta o ridimensiona i blocchi nelle corsie delle zone |
 | Clic su riga della tabella | Vai al momento della tag |
 | Tasto destro sul pulsante tag | Modifica la descrizione della tag |
-| Tasto destro sulla riga | Modifica descrizione o elimina quell'occorrenza |
+| Tasto destro sulla riga | Modifica descrizione o tempo, oppure elimina quell'occorrenza |
 | F10 / doppio clic sul video | Schermo intero solo video |
 | F11 | Schermo intero con interfaccia |
-| Esc | Esce dallo schermo intero |
+| Esc | Annulla la zona in bozza o esce dallo schermo intero |
 | Frecce curve | Ruota il video di 90° |
 | Cursore volume / altoparlante | Volume / muto |
 | Filtro tag | Mostra una sola etichetta o tutte |
@@ -61,6 +61,26 @@ avviandola dall'inizio parte dalla fine. Spazio ricorda l'ultima direzione.
 Attraversare una tag durante la riproduzione ne mostra il numero per circa
 mezzo secondo; spostarsi con la timeline non lampeggia tutte le tag saltate.
 
+## Zone di zoom e velocità
+
+- **Rettangolo, corsia blu.** Traccia un ritaglio sul video. Le transizioni
+  di ingresso e uscita durano 0,2 s di tempo reale ciascuna, indipendentemente
+  dalla velocità di riproduzione.
+- **Orologio, corsia viola.** Applica una percentuale della velocità globale.
+  Il fattore iniziale è 10%, quindi con velocità globale al 50% la zona va al
+  5%. Imposta un fattore sopra il 100% per accelerare.
+- La bozza parte dal punto corrente e dura 5 s, o il 5% del video se 5 s
+  occuperebbero meno di 24 pixel sulla timeline. Fai clic altrove per
+  confermarla. Premi o clicca un numero con esattamente due punti per
+  collegare i limiti a quei due punti. Esc annulla.
+- Trascina il centro per spostare il blocco o un bordo per ridimensionarlo.
+  Usa il tasto destro per impostazioni ed eliminazione. Zoom e velocità
+  possono sovrapporsi.
+- Aggiungere punti con lo stesso numero lascia intatti i collegamenti.
+  Usa **Modifica tempo del punto…** nella tabella per spostare il bordo
+  collegato. Le modifiche manuali al blocco mantengono lo scarto dal punto.
+  Eliminare un punto scollega il bordo e lo lascia nella stessa posizione.
+
 ## Tabella ed esportazione
 
 Le righe sono ordinate per tempo. **Intertempo** misura la differenza rispetto
@@ -77,14 +97,16 @@ Intertempo (ms), Cumulato (ms)**. Include tutte le etichette, indipendentemente 
 
 Salvataggio automatico in `%LOCALAPPDATA%\TommeView\sessions`, associato al
 percorso assoluto del video. Spostare o rinominare il file cambia la sessione
-associata. Il formato v3 conserva tag, descrizioni e rotazione; i formati v1/v2
-restano leggibili. La rotazione non modifica il video originale.
+associata. Il formato v4 conserva le zone e i collegamenti ai punti. Le sessioni
+senza zone restano in v3. TommeView legge i formati da v1 a v4.
+La rotazione non modifica il video originale.
 
 **Informazioni > Apri cartella annotazioni** apre i file da salvare come backup.
 **Importa flag** importa una vecchia cartella `data` o `sessions` senza sovrascrivere
 sessioni già presenti. Aggiornamento e disinstallazione preservano le annotazioni.
 
-Il cestino cancella i punti del video corrente ma conserva descrizioni e rotazione.
+Il cestino cancella i punti del video corrente e conserva descrizioni, rotazione
+e limiti delle zone, scollegando i punti eliminati.
 Il reset globale cancella sessioni, descrizioni e rotazioni di tutti i video;
 conserva video e preferenze e impedisce il recupero automatico delle vecchie copie.
 
