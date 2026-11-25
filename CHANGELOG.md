@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.6.5
+
+- Check the official stable yt-dlp release at startup in the background. Verify its SHA-256 and save newer builds in a per-user cache.
+- YouTube acquisition uses the newest verified local copy available when the download starts. Offline or failed checks leave the existing copy usable.
+- Add `--no-yt-dlp-update` for launches that should skip the network check.
+- Build the Windows executable and installer directly from the public source tree.
+
 ## 1.6.4
 
 - Add a localized LGPL notice and an Open licenses button to the About dialog.

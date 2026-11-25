@@ -19,9 +19,10 @@ to download from YouTube or any other service.
 
 YouTube's terms and applicable law may limit downloads and automated access. A
 video creator's authorization does not necessarily settle service-contract,
-copyright or anti-circumvention questions. Do not add cookie import,
-credential collection, bypasses or automatic tool updates without a separate
-technical and legal review.
+copyright or anti-circumvention questions. The startup updater downloads stable
+yt-dlp binaries directly from upstream GitHub Releases and verifies the release
+asset digest. This per-user cache is separate from the pinned third-party tools
+distributed in the installer.
 
 ## FFmpeg and Qt
 

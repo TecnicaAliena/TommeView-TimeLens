@@ -11,6 +11,7 @@ from PySide6.QtWidgets import (QCheckBox, QDialog, QFileDialog, QHBoxLayout, QLa
 
 from acquisition import AcquisitionCancelled, acquire, find_tools, youtube_url
 from localization import RESOURCES
+from ytdlp_update import preferred_ytdlp
 
 
 class DownloadWorker(QThread):
@@ -39,10 +40,11 @@ class DownloadWorker(QThread):
 class AcquisitionDialog(QDialog):
     videoReady = Signal(str)
 
-    def __init__(self, translator, preferences, parent=None):
+    def __init__(self, translator, preferences, parent=None, *, ytdlp_cache=None):
         super().__init__(parent)
         self.t = translator.text
         self.preferences = Path(preferences)
+        self.ytdlp_cache = ytdlp_cache
         self.worker = None
         self.close_after_cancel = False
         self.result_path = None
@@ -132,7 +134,10 @@ class AcquisitionDialog(QDialog):
             if not self.folder.text().strip():
                 raise ValueError('Cartella acquisizioni')
             folder = Path(self.folder.text()).expanduser().resolve()
-            tools = find_tools(RESOURCES / 'tools/download')
+            tools_root = RESOURCES / 'tools/download'
+            tools = find_tools(tools_root)
+            if self.ytdlp_cache is not None:
+                tools['yt-dlp'] = preferred_ytdlp(self.ytdlp_cache, tools_root, tools['yt-dlp'])
             folder.mkdir(parents=True, exist_ok=True)
             self.preferences.parent.mkdir(parents=True, exist_ok=True)
             temporary = self.preferences.with_suffix('.tmp')

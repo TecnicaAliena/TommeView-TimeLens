@@ -1,10 +1,15 @@
-# Dependency sources — TommeView 1.6.4
+# Dependency sources — TommeView 1.6.4 and 1.6.5
 
 TommeView's original application source is published in this repository under
 GPL-3.0-or-later. This page concerns only the third-party software distributed
 with the Windows package.
 
-The release named `v1.6.4` provides six `TommeView-dependency-sources-…` ZIP
+The TommeView 1.6.5 installer uses the same pinned third-party binaries as 1.6.4.
+The startup updater fetches newer stable yt-dlp versions from the official
+[yt-dlp releases with source links](https://github.com/yt-dlp/yt-dlp/releases).
+
+[Release v1.6.4](https://github.com/TecnicaAliena/TommeView-TimeLens/releases/tag/v1.6.4)
+provides six `TommeView-dependency-sources-…` ZIP
 assets, together with their SHA-256 hashes. The complete asset list, each
 upstream URL, version/commit and archive hash is in
 [dependency-source-inventory.json](dependency-source-inventory.json). The

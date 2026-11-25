@@ -1,4 +1,4 @@
-# Manuale TommeView 1.6.4
+# Manuale TommeView 1.6.5
 
 [Presentazione italiana](README.it.md) · [English overview](README.md) · [English manual](manual.en.md) · [Installation (English)](INSTALLATION.md)
 
@@ -89,6 +89,11 @@ Il reset globale cancella sessioni, descrizioni e rotazioni di tutti i video;
 conserva video e preferenze e impedisce il recupero automatico delle vecchie copie.
 
 ## Acquisizione YouTube
+
+All'avvio TommeView controlla in background l'ultima versione stabile di yt-dlp.
+Verifica lo SHA-256 delle nuove versioni e le salva nella cache utente.
+L'acquisizione usa la copia locale disponibile quando premi **Scarica**. Per
+saltare il controllo di rete all'avvio usa `--no-yt-dlp-update`.
 
 Apri **Scarica da YouTube**, inserisci il collegamento a un singolo video, leggi
 l'avviso e conferma di aver verificato che il download sia consentito. La conferma

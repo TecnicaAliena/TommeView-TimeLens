@@ -1,4 +1,4 @@
-# TommeView 1.6.4 user manual
+# TommeView 1.6.5 user manual
 
 [Overview](README.md) · [Italian manual](manuale.it.md) · [Installation](INSTALLATION.md)
 
@@ -85,6 +85,11 @@ Global reset clears all sessions, descriptions and rotations, preserves videos a
 preferences, and prevents automatic restoration from old portable session copies.
 
 ## YouTube acquisition
+
+At startup, TommeView checks the official stable yt-dlp release in the background.
+Newer copies are verified by SHA-256 and stored in your user cache. Acquisition
+uses the local version available when you click **Download**. To skip the startup
+network check, launch with `--no-yt-dlp-update`.
 
 Choose **Download from YouTube**, paste a single-video link, read the notice and
 acknowledge that you checked downloading is permitted. Acknowledgement is not

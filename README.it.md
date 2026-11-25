@@ -53,7 +53,9 @@ Gli intervalli si riferiscono alla timeline del filmato. Per interpretarli come 
 
 Il programma dispone di un installer per utente, senza necessità di installare Python o VLC. L'integrazione con **Apri con**, il menu contestuale e le associazioni dei file è configurabile durante l'installazione.
 
-Scarica **TommeView 1.6.4** dalla pagina delle [release](https://github.com/TecnicaAliena/TommeView-TimeLens/releases). Gli asset sorgente delle dipendenze sono pubblicati separatamente dalla procedura di installazione: consulta [riferimenti](SOURCE_REFERENCES.md) e [istruzioni di consegna](SOURCE_DELIVERY.md).
+Scarica **TommeView 1.6.5** dalla pagina delle [release](https://github.com/TecnicaAliena/TommeView-TimeLens/releases). Gli asset sorgente delle dipendenze sono pubblicati separatamente dalla procedura di installazione: consulta [riferimenti](SOURCE_REFERENCES.md) e [istruzioni di consegna](SOURCE_DELIVERY.md).
+
+All'avvio TommeView controlla in background gli aggiornamenti stabili di yt-dlp, li verifica e li salva nella cache utente.
 
 Le licenze e i componenti di terze parti sono riepilogati in [`THIRD_PARTY_LICENSES.md`](THIRD_PARTY_LICENSES.md), con gli avvisi nella cartella [`licenses/`](licenses/). Per PySide6 abbiamo scelto LGPL-3.0-only; la decisione e gli adempimenti sono descritti in [`licenses/PySide6-LICENSE-DECISION.md`](licenses/PySide6-LICENSE-DECISION.md). La configurazione FFmpeg verificata è in [`ffmpeg-build-config.txt`](ffmpeg-build-config.txt).
 

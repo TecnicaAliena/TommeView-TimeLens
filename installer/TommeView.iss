@@ -1,6 +1,6 @@
 #define AppName "TommeView"
 #define LegacyFFmpeg "_internal\tools\download\ffmpeg\ffmpeg-n8.1.2-51-g7ba069f4f1-win64-lgpl-8.1"
-#define AppVersion "1.6.4"
+#define AppVersion "1.6.5"
 #define AppAuthor "Marco Tommesani"
 #ifdef ValidationBuild
 #define ShellProgId "TommeView.Validation.Video"
@@ -42,7 +42,7 @@ SolidCompression=yes
 UninstallDisplayIcon={app}\TommeView.exe
 VersionInfoCompany={#AppAuthor}
 VersionInfoDescription=TommeView Setup
-VersionInfoVersion=1.6.4.0
+VersionInfoVersion=1.6.5.0
 SetupIconFile=..\assets\tommeview.ico
 CloseApplications=yes
 RestartApplications=no
@@ -85,8 +85,8 @@ Name: "fileassoc"; Description: "{cm:FileAssociation}"; GroupDescription: "{cm:F
 [Files]
 Source: "..\dist\TommeView\TommeView.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\dist\TommeView\_internal\*"; DestDir: "{app}\_internal"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "..\README.md"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\README.en.md"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\dist\TommeView\README.md"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\dist\TommeView\README.en.md"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\dist\TommeView\docs\*"; DestDir: "{app}\docs"; Flags: ignoreversion recursesubdirs
 Source: "..\dist\TommeView\THIRD_PARTY_LICENSES.md"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\dist\TommeView\LICENSE"; DestDir: "{app}"; Flags: ignoreversion

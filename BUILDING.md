@@ -25,7 +25,7 @@ Run TommeView from source with:
 Run the focused checks and source smoke test:
 
 ```powershell
-.\.venv-build\Scripts\python.exe -m pytest test_model.py test_acquisition.py test_localization.py test_download_payload.py test_qt_payload.py -q
+.\.venv-build\Scripts\python.exe -m pytest test_model.py test_acquisition.py test_localization.py test_download_payload.py test_qt_payload.py test_ytdlp_update.py -q
 .\.venv-build\Scripts\python.exe smoke_test.py
 ```
 
@@ -33,7 +33,7 @@ Build the executable and installer:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File build.ps1
-powershell -ExecutionPolicy Bypass -File build-installer.ps1
+powershell -ExecutionPolicy Bypass -File build-installer.ps1 -SkipBuild -Compiler 'C:\path\to\ISCC.exe'
 ```
 
 The build writes to ignored `dist/`, `build/` and `release/` directories. Read

@@ -6,21 +6,25 @@ import pytest
 import package_dependency_sources as packer
 
 
-def test_rejects_archive_outside_manifest_directory(tmp_path, monkeypatch):
+@pytest.fixture
+def manifest(tmp_path, monkeypatch):
     manifest = tmp_path / 'manifest.json'
-    manifest.write_text(json.dumps([{'file': '../private.tar.gz', 'sha256': '0' * 64}]))
+    (tmp_path / 'git-fallbacks.json').write_text('[]', encoding='utf-8')
     monkeypatch.setattr(packer, 'GROUPS', {'': manifest})
     monkeypatch.setattr(packer, 'SOURCES', tmp_path)
+    monkeypatch.setattr(packer, 'REPORTS', tmp_path)
+    return manifest
+
+
+def test_rejects_archive_outside_manifest_directory(manifest):
+    manifest.write_text(json.dumps([{'file': '../private.tar.gz', 'sha256': '0' * 64}]))
     with pytest.raises(ValueError, match='allowed source archive'):
         packer.selected_sources()
 
 
-def test_rejects_changed_archive(tmp_path, monkeypatch):
-    manifest = tmp_path / 'manifest.json'
+def test_rejects_changed_archive(tmp_path, manifest):
     manifest.write_text(json.dumps([{'file': 'source.tar.gz', 'sha256': '0' * 64}]))
     (tmp_path / 'source.tar.gz').write_bytes(b'changed bytes')
-    monkeypatch.setattr(packer, 'GROUPS', {'': manifest})
-    monkeypatch.setattr(packer, 'SOURCES', tmp_path)
     with pytest.raises(ValueError, match='hash mismatch'):
         packer.selected_sources()
 

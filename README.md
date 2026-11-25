@@ -37,7 +37,9 @@ and frame rate before interpreting them as real machine timings.
 
 ## Availability
 
-Download **TommeView 1.6.4** from the [releases](https://github.com/TecnicaAliena/TommeView-TimeLens/releases) page. Third-party dependency source assets are separate from the installer; see [references](SOURCE_REFERENCES.md) and [delivery instructions](SOURCE_DELIVERY.md). Python and VLC are not required. Installation is per user; Explorer integration is optional.
+Download **TommeView 1.6.5** from the [releases](https://github.com/TecnicaAliena/TommeView-TimeLens/releases) page. Third-party dependency source assets are separate from the installer; see [references](SOURCE_REFERENCES.md) and [delivery instructions](SOURCE_DELIVERY.md). Python and VLC are not required. Installation is per user; Explorer integration is optional.
+
+TommeView checks for and caches verified stable yt-dlp updates in the background at startup.
 
 ## Open source
 

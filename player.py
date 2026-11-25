@@ -1,6 +1,7 @@
 import argparse
 import os
 import sys
+import threading
 import time
 from pathlib import Path
 
@@ -18,6 +19,7 @@ from model import COLORS, RATES, Markers, SessionStore, export_csv, seconds
 from app_info import APP_NAME, APP_VERSION, APP_AUTHOR
 from localization import RESOURCES, Translator
 from acquisition_ui import AcquisitionDialog
+from ytdlp_update import check_for_update
 
 BASE = Path(sys.executable).parent if getattr(sys, 'frozen', False) else Path(__file__).parent
 
@@ -174,7 +176,7 @@ class Timeline(QWidget):
 
 
 class PlayerWindow(QMainWindow):
-    def __init__(self, data_dir=None):
+    def __init__(self, data_dir=None, *, ytdlp_cache=None):
         super().__init__()
         self.setWindowTitle('TommeView - Video e intertempi')
         self.setWindowIcon(QIcon(str(RESOURCES / 'assets/tommeview.ico')))
@@ -184,6 +186,7 @@ class PlayerWindow(QMainWindow):
         self.store = SessionStore(data_dir if data_dir is not None else default_session_dir(),
                                   () if data_dir is not None else [BASE / 'data' / 'sessions'])
         self.translator = Translator(self.store.folder.parent / 'preferences.json')
+        self.ytdlp_cache = ytdlp_cache
         self.t = self.translator.text
         self.session_dirty = False
         self.pending_frame = None
@@ -429,7 +432,8 @@ class PlayerWindow(QMainWindow):
     def show_acquisition(self):
         if self.download_dialog is None:
             self.download_dialog = AcquisitionDialog(self.translator,
-                self.store.folder.parent / 'acquisition-preferences.json', self)
+                self.store.folder.parent / 'acquisition-preferences.json', self,
+                ytdlp_cache=self.ytdlp_cache)
             self.download_dialog.videoReady.connect(self.open_video)
         self.download_dialog.show()
         self.download_dialog.raise_()
@@ -1051,6 +1055,8 @@ def main():
     parser.add_argument('video', nargs='?')
     parser.add_argument('--demo', action='store_true')
     parser.add_argument('--data-dir', type=Path)
+    parser.add_argument('--no-yt-dlp-update', action='store_true',
+                        help='skip the startup check for yt-dlp updates')
     parser.add_argument('--self-test', action='store_true', help=argparse.SUPPRESS)
     args = parser.parse_args()
     if args.self_test:
@@ -1067,8 +1073,13 @@ def main():
     app.setApplicationVersion(APP_VERSION)
     app.setStyle('Fusion')
     app.setStyleSheet(STYLE)
-    window = PlayerWindow(args.data_dir)
+    tools_root = RESOURCES / 'tools/download'
+    ytdlp_cache = default_session_dir().parent / 'tools' / 'yt-dlp'
+    window = PlayerWindow(args.data_dir, ytdlp_cache=ytdlp_cache)
     window.show()
+    if not args.no_yt_dlp_update and (tools_root / 'yt-dlp.exe').is_file():
+        threading.Thread(target=check_for_update, args=(ytdlp_cache, tools_root),
+                         name='yt-dlp-update', daemon=True).start()
     path = BASE / 'demo' / 'demo.avi' if args.demo else args.video
     if path:
         QTimer.singleShot(150, lambda: window.open_video(path))
